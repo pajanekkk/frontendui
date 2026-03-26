@@ -19,6 +19,7 @@
     "@hrbolek/uoisfrontend-ug2": "*",
     "@hrbolek/uoisfrontend-all": "*",
     "@popperjs/core": "^2.11.8",
+    "@pajaaa/pajaaa-pckg": "*",
     "bootstrap": "^5.3.3",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",

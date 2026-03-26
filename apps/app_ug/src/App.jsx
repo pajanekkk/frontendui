@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { AppCanvas } from '@hrbolek/uoisfrontend-gql-shared'
 import { AppRouter } from './AppRouter';
+import { sayHello } from '@pajaaa/pajaaa-pckg'
 
 export const App = () => {
     return (
@@ -17,8 +18,11 @@ export const App = () => {
                 </Container>
             </Navbar> */}
             {/* Hello World */}
+            <div>
+                <p style={{ color: 'pink', fontWeight: 'bold' }}>{sayHello()}</p>
+            </div>
             <AppRouter />
-        </AppCanvas>    
+        </AppCanvas>
         // {/* </Container> */}
     )
 }
