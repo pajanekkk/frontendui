@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "react-bootstrap": "^2.10.10"
+    "react-bootstrap": "^2.10.10",
+    "pajaaa-pckg": "*"
   }
 }
