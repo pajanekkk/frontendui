@@ -36,7 +36,7 @@ import { CreateURI, ReadItemURI, VectorItemsURI } from "../Components"
  *   element: <TemplateEditPage />
  * }
  */
-export const TemplateRouterSegments = [
+export const UserRouterSegments = [
     {
         path: CreateURI,
         element: (<PageCreateItem />),
@@ -52,11 +52,11 @@ export const TemplateRouterSegments = [
     {
         path: UpdateItemURI,
         element: (<PageUpdateItem />),
-    },   
+    },
     {
         path: DeleteItemURI,
         element: (<PageDeleteItem />),
-    },   
+    },
     // {
     //     path: "sad",
     //     element: (<PageReadItemRolesOn />)
@@ -68,5 +68,5 @@ export const TemplateRouterSegments = [
     {
         path: ReadItemURI.replace("view", ":any"),
         element: (<PageReadItem />),
-    }    
+    }
 ]
