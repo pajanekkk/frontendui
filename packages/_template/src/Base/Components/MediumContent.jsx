@@ -8,7 +8,7 @@ export const NonPriorityAttributeValue = ({ datarow = {}, name }) => {
         return (
             <Attribute item={datarow} label={name} attribute_name={name}>
                 <Link item={datarow} >{datarow?.id || "Data Error"}</Link >
-            </Attribute> 
+            </Attribute>
         )
     if (["name", "surname", "fullname"].includes(name))
         return (
@@ -23,14 +23,14 @@ export const NonPriorityAttributeValue = ({ datarow = {}, name }) => {
             // <Attribute item={datarow} label={name} attribute_name={name} attribute_value_result={<Link item={value} />} />
             return null
         else {
-            return (            
+            return (
                 <Attribute item={datarow} label={name} attribute_name={name} attribute_value_result={value || ""} />
             )
         }
     }
 
     const scalarname = name.replace("Id", "")
-    const { id, __typename} = datarow?.[scalarname] || {}
+    const { id, __typename } = datarow?.[scalarname] || {}
     if (id && __typename) {
         // return <>{id} {__typename}</>
         return (
@@ -44,12 +44,13 @@ export const NonPriorityAttributeValue = ({ datarow = {}, name }) => {
         //     return <Attribute item={datarow} label={name} attribute_name={name} attribute_value_result={`${value?.fullname || value?.name || value?.id}`} />
         // else
         //     return <Attribute item={datarow} label={name} attribute_name={name} attribute_value_result={value || ""} />
-    }    
+    }
 }
 
 export const MediumContent = ({ item, children }) => {
     return (
         <>
+            Byl jsem tady, Fantomas
             {Object.entries(item).map(([attribute_name, attribute_value]) => {
                 // if (attribute_name !== "id") return null
                 if (Array.isArray(attribute_value)) return null
