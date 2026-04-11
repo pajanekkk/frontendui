@@ -117,7 +117,7 @@ const clean = (s) => String(s ?? "").replace(/^\/+|\/+$/g, "");
  * @property {boolean} [withId]
  * @property {string} [idParam]
  */
-export const uri = ({ app="_", model="_", action="view", withId = false, idParam = ":id" } = {}) => {
+export const uri = ({ app = "_", model = "_", action = "view", withId = false, idParam = ":id" } = {}) => {
     const seg = {
         app: clean(app),
         model: clean(model),
@@ -154,5 +154,5 @@ export const uri = ({ app="_", model="_", action="view", withId = false, idParam
     return obj;
 };
 
-export const URIRoot = "/template"
+export const URIRoot = "/student"
 export const URIRootObj = uri({ app: URIRoot })
