@@ -111,6 +111,13 @@ export const MediumContent = ({ item, children }) => {
             </Attribute>
 
 
+            <Attribute label={"Studies"}>
+                <Link item={item}>
+                    {item?.studies || "Data error"}
+                </Link>
+            </Attribute>
+
+
             <Attribute label={"Vytvořeno"}>
                 <Link item={item}>
                     {formatDateTime(item?.created) || "Data error"}
