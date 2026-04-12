@@ -1,6 +1,7 @@
 import { Col } from "../../../../_template/src/Base/Components/Col"
 import { Row } from "../../../../_template/src/Base/Components/Row"
 import { Link } from "./Link"
+import { Attribute, formatDateTime } from "../../../../_template/src/Base"
 /**
  * A component that displays medium-level content for an template entity.
  *
@@ -92,5 +93,44 @@ import { Link } from "./Link"
 //         </>
 //     )
 // }
+import { MediumContent as MediumContent_ } from "../../../../_template/src/Base/Components/MediumContent"
 
-export { MediumContent } from "../../../../_template/src/Base/Components/MediumContent"
+export const MediumContent = ({ item, children }) => {
+    return (
+        <>
+            <Attribute label={"ID"}>
+                <Link item={item}>
+                    {item?.id || "Data error"}
+                </Link>
+            </Attribute>
+
+            <Attribute label={"Jméno a přijmení"}>
+                <Link item={item}>
+                    {item?.fullname || "Data error"}
+                </Link>
+            </Attribute>
+
+
+            <Attribute label={"Vytvořeno"}>
+                <Link item={item}>
+                    {formatDateTime(item?.created) || "Data error"}
+                </Link>
+            </Attribute>
+
+
+            <hr />
+            <Attribute label={"Změněno"}>
+                {formatDateTime(item?.lastchange) || "Data error"}
+
+            </Attribute>
+            <hr />
+            <pre>
+                {JSON.stringify(item, null, 2)}
+
+            </pre>
+        </>
+
+
+    )
+
+}

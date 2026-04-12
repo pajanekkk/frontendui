@@ -9,13 +9,13 @@ import { BaseRouterSegments } from "../../../packages/_template/src/Base/Pages/R
 
 // import { GroupRouterSegments } from "../../../packages/_template/src/GroupGQLModel/Pages/RouterSegment";
 // import { RoleTypeRouterSegments } from "../../../packages/_template/src/RoleTypeGQLModel/Pages";
-import { UserRouterSegments } from "../../../packages/_template/src/UserGQLModel/Pages/RouterSegment";
+import { UserRouterSegments } from "../../../packages/student/src/UserGQLModel/Pages/RouterSegment";
 // import { GroupTypeRouterSegments } from "../../../packages/_template/src/GroupTypeGQLModel/Pages/RouterSegment";
 // import { RoleRouterSegments } from "../../../packages/_template/src/RoleGQLModel/Pages";
 // import { Page } from "../../../packages/_template/src/Base/Pages/Page";
 import { AppNavbar } from "./AppNavbar";
 
-// import { UserGQLModelRouterSegments } from "../../../packages/student/src/UserGQLModel/Pages/RouterSegment";
+//import { UserGQLModelRouterSegments } from "../../../packages/student/src/UserGQLModel/Pages/RouterSegment";
 
 
 const AppLayout = () => (

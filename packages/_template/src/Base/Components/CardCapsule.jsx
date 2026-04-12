@@ -40,7 +40,7 @@ const styles = {
 
         borderRadius: "8px", // Rounded corners
 
-        // borderBottom: "2px solid #6c757d", // pouze dolní linka
+        // borderBottom: "2px solid #7a7d6c", // pouze dolní linka
         // borderTop: "2px solid #6c757d",
         // borderLeft: "none",
         // borderRight: "none",

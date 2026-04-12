@@ -1,27 +1,18 @@
 import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared"
 
 const LinkFragmentStr = `
-fragment Link on RoleTypeGQLModel {
-  __typename
-  id
-  lastchange
-  created
-  createdbyId
-  changedbyId
-  rbacobjectId
-    name
-  nameEn
-  path
-  mastertypeId
-  mastertype {
-    __typename
-  }
-  
-}
+ fragment Link on UserGQLModel {
+      __typename
+      id
+      lastchange
+      created
+      fullname
+      email
+      }
 `
 
 const MediumFragmentStr = `
-fragment Medium on RoleTypeGQLModel {
+fragment Medium on UserGQLModel {
   ...Link
   rbacobject {
     ...RBRoles
@@ -30,14 +21,11 @@ fragment Medium on RoleTypeGQLModel {
 `
 
 const LargeFragmentStr = `
-fragment Large on RoleTypeGQLModel {
+fragment Large on UserGQLModel {
   ...Medium
-  subtypes {
-    __typename
-  }
 }
 `
-
+/* 
 const RoleFragmentStr = `
 fragment Role on RoleGQLModel {
     __typename
@@ -61,7 +49,7 @@ fragment Role on RoleGQLModel {
     user { __typename id fullname }
     group { __typename id name }
   }
-`
+` */
 
 const RBACFragmentStr = `
 fragment RBRoles on RBACObjectGQLModel {
@@ -92,10 +80,9 @@ fragment RBRoles on RBACObjectGQLModel {
   }
 }`
 
-export const RoleFragment = createQueryStrLazy(`${RoleFragmentStr}`)
+// export const RoleFragment = createQueryStrLazy(`${RoleFragmentStr}`)
 export const RBACFragment = createQueryStrLazy(`${RBACFragmentStr}`)
 
 export const LinkFragment = createQueryStrLazy(`${LinkFragmentStr}`)
 export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, LinkFragment, RBACFragment)
-export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment)
-  
+export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment, /* RoleFragment */)
