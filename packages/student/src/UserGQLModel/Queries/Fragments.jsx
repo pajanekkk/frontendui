@@ -13,9 +13,12 @@ const LinkFragmentStr = `
       studies {
         ...Student
       }
+      roles {
+        ...Role
+      }
       
 }
-`
+`//tady zmena v roles
 
 const MediumFragmentStr = `
 fragment Medium on UserGQLModel {
@@ -31,7 +34,7 @@ fragment Large on UserGQLModel {
   ...Medium
 }
 `
-/* 
+
 const RoleFragmentStr = `
 fragment Role on RoleGQLModel {
     __typename
@@ -55,7 +58,7 @@ fragment Role on RoleGQLModel {
     user { __typename id fullname }
     group { __typename id name }
   }
-` */
+`
 
 const RBACFragmentStr = `
 fragment RBRoles on RBACObjectGQLModel {
@@ -86,9 +89,9 @@ fragment RBRoles on RBACObjectGQLModel {
   }
 }`
 
-// export const RoleFragment = createQueryStrLazy(`${RoleFragmentStr}`)
+export const RoleFragment = createQueryStrLazy(`${RoleFragmentStr}`)
 export const RBACFragment = createQueryStrLazy(`${RBACFragmentStr}`)
 
 export const LinkFragment = createQueryStrLazy(`${LinkFragmentStr}`, StudentFragment)
 export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, LinkFragment, RBACFragment)
-export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment, /* RoleFragment */)
+export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment, RoleFragment)
