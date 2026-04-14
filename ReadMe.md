@@ -26,3 +26,6 @@ npm run dev -w @pajapaja/app_student
 ```cmd
 npm run build -w @pajapaja/app_student
 ```
+
+### Odkaz na npmjs.org:
+- https://www.npmjs.com/package/@pajapaja/student
