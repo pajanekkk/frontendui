@@ -43,14 +43,14 @@ export const NavigationHistoryProvider = ({ children }) => {
     const pathname = location.pathname
     const seg = pathname.split("/").filter(Boolean);
     const [app, entityType, action, id] = seg;
-    
-    
-    const item = useSelector((rootState) => (id !=null)? selectItemById(rootState, id): null)
+
+
+    const item = useSelector((rootState) => (id != null) ? selectItemById(rootState, id) : null)
     useEffect(() => {
-        
-        if (!id || id === "create" || id === "new") 
+
+        if (!id || id === "create" || id === "new")
             return
-        
+
         const trail = []
 
         trail.push({
@@ -66,11 +66,11 @@ export const NavigationHistoryProvider = ({ children }) => {
                 to: `/${app}/${entityType}/${action}/${id}`,
             });
         }
-        
+
         const computed = { entityKey: `${entityType}:${id}`, trail, entityType, idFromUrl: id };
 
         // čekej, až bude entita reálně známa
-        
+
         const now = Date.now();
 
         setItems((prev) => {
@@ -97,7 +97,7 @@ export const NavigationHistoryProvider = ({ children }) => {
             const without = prev.filter((x) => x.entityKey !== computed.entityKey);
             return [nextEntry, ...without].slice(0, MAX);
         });
-    }, [ location.pathname, item]);
+    }, [location.pathname, item]);
 
     const value = useMemo(
         () => ({
@@ -111,7 +111,7 @@ export const NavigationHistoryProvider = ({ children }) => {
 
     return (<Ctx.Provider value={value}>
         {children}
-        </Ctx.Provider>);
+    </Ctx.Provider>);
 };
 
 export const useAzureLikeHistory = () => {
@@ -122,7 +122,7 @@ export const useAzureLikeHistory = () => {
 
 
 export const NavigationHistoryLinks = () => {
-    const { items=[], goToEntry, clear } = useAzureLikeHistory();
+    const { items = [], goToEntry, clear } = useAzureLikeHistory();
     const navigate = useNavigate();
     const ordered = useMemo(() => [...items].reverse(), [items]);
     const handleClick = (e) => {
@@ -141,38 +141,38 @@ export const NavigationHistoryLinks = () => {
 
     return (
         <Navbar bg="light">
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-            <span style={{ opacity: 0.7 }}></span>
-            
-            {ordered.map((e) => (<>
-                <a
-                    key={e.entityKey}
-                    type="button"
-                    href={e.pathname}
-                    onClick={handleClickMain(e)}
-                    // style={{ border: "1px solid #ccc", borderRadius: 999, padding: "2px 10px", cursor: "pointer" }}
-                    className="btn btn-sm btn-link border-0" 
-                    title={e.trail.map(t => t.label).join(" / ")}
-                >
-                    {/* Azure feeling: jméno entity + aktuální blade */}
-                    {e.itemLabel}
-                    
-                </a>
-                {e.trail.length > 1 && 
-                    <span style={{ opacity: 0.7 }}>
-                        {e.trail.map((t, i) => (
-                            <a key={t.to + ":" + i} href={t.to} className="btn btn-sm btn-link border-0" onClick={handleClick}>
-                                {t.label}
-                            </a>
-                        ))}
-                    </span>
-                }
-                |
-                </>
-            ))}
+            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                <span style={{ opacity: 0.7 }}></span>
 
-            <button type="button" className="btn btn-sm btn-outline-danger border-0" onClick={clear}>Vymazat</button>
-        </div>
+                {ordered.map((e) => (<>
+                    <a
+                        key={e.entityKey}
+                        type="button"
+                        href={e.pathname}
+                        onClick={handleClickMain(e)}
+                        // style={{ border: "1px solid #ccc", borderRadius: 999, padding: "2px 10px", cursor: "pointer" }}
+                        className="btn btn-sm btn-link border-0"
+                        title={e.trail.map(t => t.label).join(" / ")}
+                    >
+                        {/* Azure feeling: jméno entity + aktuální blade */}
+                        {e.itemLabel}
+
+                    </a>
+                    {e.trail.length > 1 &&
+                        <span style={{ opacity: 0.7 }}>
+                            {e.trail.map((t, i) => (
+                                <a key={t.to + ":" + i} href={t.to} className="btn btn-sm btn-link border-0" onClick={handleClick}>
+                                    {t.label}
+                                </a>
+                            ))}
+                        </span>
+                    }
+                    |
+                </>
+                ))}
+
+                <button type="button" className="btn btn-sm btn-outline-danger border-0" onClick={clear}>Vymazat</button>
+            </div>
         </Navbar>
     );
 };

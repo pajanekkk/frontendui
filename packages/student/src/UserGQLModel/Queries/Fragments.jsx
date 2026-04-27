@@ -1,6 +1,5 @@
 import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared"
 import { StudentFragment } from "../../StudentGQLModel/Queries/Fragments"
-import { ProgramFragment } from "../../ProgramGQLModel/Queries/Fragments"
 
 const LinkFragmentStr = `
  fragment Link on UserGQLModel {
