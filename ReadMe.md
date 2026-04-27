@@ -1,22 +1,31 @@
-# Změny
+## O repozitáři
+Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, předměty, semestry v rámci modelu UserGQLModel + StudentGQLModel
 
-## 3.4.2025
+## Změny
 
-- script `createscalar.js`
-- script `createvector.js`
-- template `EmptyVectorsAttribute.jsx`
+### 12.4.2026
+
+- zahájení práce na projektu
+- vytvoření projektového npm package
+- základní fragmenty
+
+### 13.4.2026
+
+- pokus o link modelu ProgramGQL se StudentGQL do hlavního modelu UserGQL
+- zkouska commitu spolupracujícího na projektu
 
 
-
-
-# Jak spustit konrétní app
+## Jak spustit app?
 
 ```cmd
-npm run dev -w @hrbolek/app_dynamic
+npm run dev -w @pajapaja/app_student
 ```
 
-# Jak sestavit konrétní app
+## Jak sestavit app?
 
 ```cmd
-npm run build -w @hrbolek/app_dynamic
+npm run build -w @pajapaja/app_student
 ```
+
+### Odkaz na npmjs.org:
+- https://www.npmjs.com/package/@pajapaja/student
