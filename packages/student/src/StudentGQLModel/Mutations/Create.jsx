@@ -1,10 +1,10 @@
 import { CreateURI, MediumEditableContent, ReadItemURI } from "../Components"
 import { InsertAsyncAction } from "../Queries"
-import {
-    CreateBody as BaseCreateBody,
-    CreateButton as BaseCreateButton,
-    CreateDialog as BaseCreateDialog,
-    CreateLink as BaseCreateLink
+import { 
+    CreateBody as BaseCreateBody, 
+    CreateButton as BaseCreateButton, 
+    CreateDialog as BaseCreateDialog, 
+    CreateLink  as BaseCreateLink
 } from "../../../../_template/src/Base/Mutations/Create"
 
 const DefaultContent = (props) => <MediumEditableContent {...props} />
@@ -39,7 +39,7 @@ const defaultitem = { name: "Nový" };
  * @returns {JSX.Element} Vykreslí `BaseCreateLink` s přednastaveným `uriPattern` a RBAC oprávněními.
  */
 export const CreateLink = ({
-    uriPattern = CreateURI,
+    uriPattern=CreateURI,
     ...props
 }) => (
     <BaseCreateLink {...props} uriPattern={uriPattern} {...permissions} />
@@ -84,17 +84,17 @@ export const CreateLink = ({
  * @returns {JSX.Element} Vykreslí `BaseCreateButton` s přednastavenými defaulty a RBAC oprávněními.
  */
 export const CreateButton = ({
-    mutationAsyncAction = MutationAsyncAction,
-    CreateDialog: CreateDialog_ = CreateDialog,
-    DefaultContent: defaultContent = DefaultContent,
-    readItemURI = ReadItemURI,
+    mutationAsyncAction=MutationAsyncAction,
+    CreateDialog: CreateDialog_=CreateDialog,
+    DefaultContent:defaultContent=DefaultContent,
+    readItemURI=ReadItemURI, 
     rbacitem,
-    item = defaultitem,
+    item=defaultitem,
     ...props
 }) => {
-    return <BaseCreateButton
+    return <BaseCreateButton 
         {...props}
-        DefaultContent={defaultContent}
+        DefaultContent={defaultContent} 
         CreateDialog={CreateDialog_}
         readItemURI={readItemURI}
         rbacitem={rbacitem}
@@ -142,18 +142,18 @@ export const CreateButton = ({
 export const CreateDialog = ({
     title = "Nov(ý/é)",
     // mutationAsyncAction=MutationAsyncAction,
-    DefaultContent: defaultContent = DefaultContent,
-    readItemURI = ReadItemURI,
-    item = defaultitem,
+    DefaultContent:defaultContent=DefaultContent,
+    readItemURI=ReadItemURI, 
+    item=defaultitem,
     ...props
 }) => {
-    return <BaseCreateDialog
-        {...props}
+    return <BaseCreateDialog 
+        {...props} 
         title={title}
-        DefaultContent={defaultContent}
+        DefaultContent={defaultContent} 
         readItemURI={readItemURI}
         item={item}
-    // mutationAsyncAction={mutationAsyncAction}
+        // mutationAsyncAction={mutationAsyncAction}
     />
 };
 
@@ -187,17 +187,16 @@ export const CreateDialog = ({
  * @returns {JSX.Element} Vykreslí `BaseCreateBody` s přednastavenými defaulty.
  */
 export const CreateBody = ({
-    mutationAsyncAction = MutationAsyncAction,
-    DefaultContent: defaultContent = DefaultContent,
-    readItemURI = ReadItemURI,
+    mutationAsyncAction=MutationAsyncAction,
+    DefaultContent:defaultContent=DefaultContent,
+    readItemURI=ReadItemURI, 
     ...props
 }) => {
-    return <BaseCreateBody
-        {...props}
-        DefaultContent={defaultContent}
+    return <BaseCreateBody 
+        {...props} 
+        DefaultContent={defaultContent} 
         readItemURI={readItemURI}
         mutationAsyncAction={mutationAsyncAction}
-
     />
 };
 

@@ -100,37 +100,55 @@ export const MediumContent = ({ item, children }) => {
         <>
             <Attribute label={"ID"}>
                 <Link item={item}>
-                    {item?.id || "Data error"}
-                </Link>
-            </Attribute>
-
-            <Attribute label={"Jméno a přijmení"}>
-                <Link item={item}>
-                    {item?.fullname || "Data error"}
-                </Link>
-            </Attribute>
-
-
-            <Attribute label={"Studies"}>
-                <Link item={item}>
-                    {item?.studies || "Data error"}
+                    {item?.id || "Chyba dat!!"}
                 </Link>
             </Attribute>
 
 
             <Attribute label={"Vytvořeno"}>
                 <Link item={item}>
-                    {formatDateTime(item?.created) || "Data error"}
+                    {formatDateTime(item?.created) || "Chyba dat!!"}
                 </Link>
             </Attribute>
 
 
             <hr />
-            <Attribute label={"Změněno"}>
-                {formatDateTime(item?.lastchange) || "Data error"}
+            <Attribute label={"Kdy změněno"}>
+                {formatDateTime(item?.lastchange) || "Chyba dat!!"}
 
             </Attribute>
+
+            <Attribute label={"Kým změněno"}>
+                <Link item={item}>
+                    {item?.changedbyId || "Chyba dat!!"}
+                </Link>
+            </Attribute>
+
             <hr />
+            {/* 
+            <Attribute label={"ID studenta"}>
+
+                <Link item={item}>
+                    {item?.userId || "Chyba dat"}
+                </Link>
+            </Attribute> */}
+
+            <Attribute label={"Číslo semestru"}>
+                <Link item={item}>
+                    {item?.semesterNumber || "Chyba dat!!"}
+                </Link>
+            </Attribute>
+
+            <Attribute label={"Začátek semestru"}>
+                <Link item={item}>
+                    {formatDateTime(item?.startdate) || "Chyba dat!!"}
+                </Link>
+            </Attribute>
+
+
+
+            <hr />
+
             <pre>
                 {JSON.stringify(item, null, 2)}
 

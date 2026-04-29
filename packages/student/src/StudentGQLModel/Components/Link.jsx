@@ -2,7 +2,7 @@ import { URIRoot } from "../../uriroot";
 import { registerLink } from "../../../../_template/src/Base/Components/Link";
 import { ProxyLink } from "../../../../_template/src/Base/Components/ProxyLink";
 
-const modelURI = `${URIRoot}/UserGQLModel`
+const modelURI = `${URIRoot}/StudentGQLModel`
 export const ListURI = `${modelURI}/list/`;
 export const CreateURI = `${modelURI}/create/`;
 export const ReadURI = `${modelURI}/view/`;
@@ -51,4 +51,4 @@ export const Link = ({ item, LinkURI: LinkURI_ = LinkURI, action = "view", child
     // return <a>{children || item?.fullname || item?.name || item?.id || "Nevim"}</a>
 }
 
-registerLink('UserGQLModel', Link)
+registerLink('StudentGQLModel', Link)

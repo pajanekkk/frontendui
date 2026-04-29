@@ -36,7 +36,7 @@ import { CreateURI, ReadItemURI, VectorItemsURI } from "../Components"
  *   element: <TemplateEditPage />
  * }
  */
-export const UserRouterSegments = [
+export const StudentRouterSegments = [
     {
         path: CreateURI,
         element: (<PageCreateItem />),

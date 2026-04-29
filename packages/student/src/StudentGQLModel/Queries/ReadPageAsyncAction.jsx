@@ -3,10 +3,10 @@ import { LargeFragment } from "./Fragments";
 import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAsyncGraphQLAction2";
 
 const ReadPageQueryStr = `
-query userPage($skip: Int, $limit: Int, $orderby: String, $where: UserInputWhereFilter) {
-  userPage(skip: $skip, limit: $limit, orderby: $orderby, where: $where) {
-  ...User
-  }
+query studentPage($skip: Int, $limit: Int, $orderby: String, $where: StudentInputFilter) {
+  studentPage(skip: $skip, limit: $limit, orderby: $orderby, where: $where) {
+  ...Large
+}
 }
 `
 const ReadPageQuery = createQueryStrLazy(`${ReadPageQueryStr}`, LargeFragment)

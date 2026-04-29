@@ -23,12 +23,12 @@ import { Input } from "../../../../_template/src/Base/FormControls/Input"
  *   <p>Additional information about the entity.</p>
  * </TemplateMediumContent>
  */
-export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (e) => null, children }) => {
+export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
     return (
-        <>
-            {/* defaultValue={item?.name|| "Název"}  */}
-            <Input id={"name"} label={"Jméno"} className="form-control" value={item?.name || "Název"} onChange={onChange} onBlur={onBlur} />
-            <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn || "Anglický název"} onChange={onChange} onBlur={onBlur} />
+        <>           
+        {/* defaultValue={item?.name|| "Název"}  */}
+            <Input id={"name"} label={"Jméno"} className="form-control" value={item?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
+            <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
             {children}
         </>
     )

@@ -3,10 +3,10 @@ import { LargeFragment } from "./Fragments";
 import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAsyncGraphQLAction2";
 
 const ReadQueryStr = `
-  query userById($id: UUID!) {
-    userById(id: $id) {
-      ...Large
-  }
+query studentById($id: UUID!) {
+  studentById(id: $id) {
+  ...Large
+}
 }
 `
 
