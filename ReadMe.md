@@ -14,6 +14,10 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - pokus o link modelu ProgramGQL se StudentGQL do hlavního modelu UserGQL
 - zkouska commitu spolupracujícího na projektu
 
+### 29.4.2026
+
+- reorganizace a rekonstrukce projektu
+
 
 ## Jak spustit app?
 
