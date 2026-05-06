@@ -94,6 +94,7 @@ import { Attribute, formatDateTime } from "../../../../_template/src/Base"
 //     )
 // }
 import { MediumContent as MediumContent_ } from "../../../../_template/src/Base/Components/MediumContent"
+import { name } from "happy-dom/lib/PropertySymbol"
 
 export const MediumContent = ({ item, children }) => {
     return (
@@ -124,6 +125,10 @@ export const MediumContent = ({ item, children }) => {
                 </Link>
             </Attribute>
 
+            <Attribute label={"Moje role"}>
+                {item?.rbacobject?.currentUserRoles?.length > 0 ? item.rbacobject.currentUserRoles.map(role => role.roletype?.name).join(", ") : "Žádné role!"}
+            </Attribute>
+
             <hr />
             {/* 
             <Attribute label={"ID studenta"}>
@@ -138,6 +143,8 @@ export const MediumContent = ({ item, children }) => {
                     {item?.semesterNumber || "Chyba dat!!"}
                 </Link>
             </Attribute>
+
+
 
             <Attribute label={"Začátek semestru"}>
                 <Link item={item}>

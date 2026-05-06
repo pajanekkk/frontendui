@@ -1,4 +1,5 @@
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { Select } from "../../../../_template/src/Base/FormControls/Select"
 
 /**
  * A component that displays medium-level content for an template entity.
@@ -23,13 +24,23 @@ import { Input } from "../../../../_template/src/Base/FormControls/Input"
  *   <p>Additional information about the entity.</p>
  * </TemplateMediumContent>
  */
-export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
+export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (e) => null, children }) => {
+
+    const handleChange = (e) => {
+        const { id, value } = e.target || {}
+        const parsedValue = id === 'semesterNumber' && value !== '' ? Number(value) : value
+        return onChange({ target: { id, value: parsedValue } })
+    }
+
     return (
-        <>           
-        {/* defaultValue={item?.name|| "Název"}  */}
-            <Input id={"name"} label={"Jméno"} className="form-control" value={item?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
-            <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
-            {children}
-        </>
+        <Input
+            id="semesterNumber"
+            label="Číslo semestru"
+            type="number"
+            className="form-control"
+            value={item?.semesterNumber || ""}
+            onChange={handleChange}
+            onBlur={onBlur}
+        />
     )
 }

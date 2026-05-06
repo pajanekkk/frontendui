@@ -12,6 +12,7 @@ fragment Link on StudentGQLModel {
 
   userId
   programId
+  stateId
   semesterNumber
   startdate
   enddate

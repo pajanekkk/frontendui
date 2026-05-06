@@ -36,7 +36,7 @@ export const useEditAction = (
         // network = true,
         mapDraftToVars,
         commitOnBlur = true,
-        onCommit=()=>null,
+        onCommit=()=>true,
     } = options;
 
     if (typeof AsyncAction !== "function") {
