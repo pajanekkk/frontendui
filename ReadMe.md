@@ -6,7 +6,7 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 ### 12.4.2026
 
 - zahájení práce na projektu
-- vytvoření projektového npm package
+- vytvoření projektového npmjs package
 - základní fragmenty
 
 ### 13.4.2026
@@ -17,6 +17,15 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 ### 29.4.2026
 
 - reorganizace a rekonstrukce projektu
+
+### 6.5.2026
+
+- pridani update mutace
+
+### 7.5.2026
+
+- rozšíření o ProgramGQLModel a UserGQLModel
+- npmjs upload v0.7.5
 
 
 ## Jak spustit app?
