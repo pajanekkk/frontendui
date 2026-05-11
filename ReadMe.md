@@ -27,6 +27,9 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - rozšíření o ProgramGQLModel a UserGQLModel
 - npmjs upload v0.7.5
 
+### 11.05.2026
+
+- implementace editu programu v kartě studenta
 
 ## Jak spustit app?
 
