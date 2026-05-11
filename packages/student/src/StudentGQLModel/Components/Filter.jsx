@@ -1,4 +1,4 @@
-import { DateTimeFilter, Filter as BaseFilter, StringFilter, UUIDFilter } from "../../../../_template/src/Base/FormControls/Filter"
+import { DateTimeFilter, Filter as BaseFilter, StringFilter, UUIDFilter, FloatFilter } from "../../../../_template/src/Base/FormControls/Filter"
 
 export const Filter = ({ id, onChange: handleChange, children }) => {
     return (
@@ -6,7 +6,7 @@ export const Filter = ({ id, onChange: handleChange, children }) => {
             <UUIDFilter id="id" />
             <StringFilter id="name" />
             <DateTimeFilter id="created" emitUtcIso={false} />
-            {/* <FloatFilter id="count" /> */}
+            <FloatFilter id="semester_number" />
             {children}
         </BaseFilter>
     )

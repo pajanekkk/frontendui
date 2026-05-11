@@ -5,7 +5,10 @@ const ProgramFragmentStr = `
 fragment Program on ProgramGQLModel {
   __typename
   id
+  typeId
   name
+  nameEn
+  lastchange
 }
 `
 
@@ -20,6 +23,7 @@ fragment Large on ProgramGQLModel {
   ...Medium
 }
 `
+
 
 export const ProgramFragment = createQueryStrLazy(`${ProgramFragmentStr}`)
 export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, ProgramFragment)

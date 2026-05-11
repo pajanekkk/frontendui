@@ -24,23 +24,31 @@ import { Select } from "../../../../_template/src/Base/FormControls/Select"
  *   <p>Additional information about the entity.</p>
  * </TemplateMediumContent>
  */
-export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (e) => null, children }) => {
+export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (e) => null, onConfirm = () => null, children }) => {
 
-    const handleChange = (e) => {
-        const { id, value } = e.target || {}
-        const parsedValue = id === 'semesterNumber' && value !== '' ? Number(value) : value
-        return onChange({ target: { id, value: parsedValue } })
-    }
+
 
     return (
-        <Input
-            id="semesterNumber"
-            label="Číslo semestru"
-            type="number"
-            className="form-control"
-            value={item?.semesterNumber || ""}
-            onChange={handleChange}
-            onBlur={onBlur}
-        />
+        <>
+            <Input
+                id="semesterNumber"
+                label="Číslo semestru"
+                type="number"
+                className="form-control"
+                value={item?.semesterNumber || ""}
+                onChange={onChange}
+                onBlur={onBlur}
+            />
+            <Input
+                id="programId"
+                label="Program"
+                type="UUID"
+                className="form-control"
+                value={item?.program?.id || ""}
+                onChange={onChange}
+                onBlur={onBlur}
+            />
+            {children}
+        </>
     )
 }
