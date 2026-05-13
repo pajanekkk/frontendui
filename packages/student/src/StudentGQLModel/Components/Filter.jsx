@@ -4,7 +4,6 @@ export const Filter = ({ id, onChange: handleChange, children }) => {
     return (
         <BaseFilter id={id} onChange={handleChange}>
             <UUIDFilter id="id" />
-            <StringFilter id="name" />
             <DateTimeFilter id="created" emitUtcIso={false} />
             <FloatFilter id="semester_number" />
             {children}
