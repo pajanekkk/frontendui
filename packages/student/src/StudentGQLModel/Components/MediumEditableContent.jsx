@@ -1,5 +1,8 @@
-import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { EntityLookup, Input } from "../../../../_template/src/Base"
 import { Select } from "../../../../_template/src/Base/FormControls/Select"
+import { SearchAsyncAction } from "../../ProgramGQLModel/Queries/SearchAsyncAction"
+import { UpdateBody } from "../Mutations/Update"
+
 
 /**
  * A component that displays medium-level content for an template entity.
@@ -27,7 +30,6 @@ import { Select } from "../../../../_template/src/Base/FormControls/Select"
 export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (e) => null, onConfirm = () => null, children }) => {
 
 
-
     return (
         <>
             <Input
@@ -39,12 +41,13 @@ export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (
                 onChange={onChange}
                 onBlur={onBlur}
             />
-            <Input
+            <EntityLookup
                 id="programId"
                 label="Program"
-                type="UUID"
+                type="string"
                 className="form-control"
-                value={item?.program?.id || ""}
+                asyncAction={SearchAsyncAction}
+                value={item?.program}
                 onChange={onChange}
                 onBlur={onBlur}
             />

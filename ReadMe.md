@@ -27,9 +27,15 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - rozšíření o ProgramGQLModel a UserGQLModel
 - npmjs upload v0.7.5
 
-### 11.05.2026
+### 11.5.2026
 
 - implementace editu programu v kartě studenta
+- known issues: člověk musí zadat UUID programu, což je uživatelsky složité
+
+### 13.5.2026
+
+- implementace EntityLookup a SearchAsync pro zajištění pohodlnější změny programu
+- npmjs upload v0.8.0
 
 ## Jak spustit app?
 
