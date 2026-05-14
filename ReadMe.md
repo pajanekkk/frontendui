@@ -1,6 +1,6 @@
 <h1 align="center">O repozitáři</h1>
 
-Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, předměty, semestry v rámci modelu UserGQLModel + StudentGQLModel
+Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, předměty, semestry v rámci modelu StudentGQLModel + ProgramGQLModel + UserGQLModel
 
 <h2 align="center">Změny a poznatky</h2>
 
