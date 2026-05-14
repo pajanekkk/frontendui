@@ -1,7 +1,8 @@
-## O repozitáři
+<h1 align="center">O repozitáři</h1>
+
 Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, předměty, semestry v rámci modelu UserGQLModel + StudentGQLModel
 
-## Změny
+<h2 align="center">Změny a poznatky</h2>
 
 ### 12.4.2026
 
@@ -32,10 +33,14 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - implementace editu programu v kartě studenta
 - known issues: člověk musí zadat UUID programu, což je uživatelsky složité
 
-### 13.5.2026
+### 13.5.2026 + 2.PD
 
 - implementace EntityLookup a SearchAsync pro zajištění pohodlnější změny programu
 - npmjs upload v0.8.0
+
+##### POZNATKY Z 2.PD:
+  * chyba při rychlé změně za sebou není zaviněna naší chybou, ale je to globální chyba
+  * nutné rozšířit o další modely, jinak všechno v pořádku
 
 ## Jak spustit app?
 
