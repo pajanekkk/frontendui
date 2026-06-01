@@ -4,35 +4,25 @@ import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAs
 
 
 const InsertMutationStr = `
-mutation roleTypeInsert(
-	$mastertypeId: UUID # null, 
-	$id: UUID # null, 
-	$name: String # null, 
-	$nameEn: String # null, 
-	$subtypes: [RoleTypeInsertGQLModel!] # null
-) {
-  roleTypeInsert(
-	roleType: {
-	mastertypeId: $mastertypeId, 
-	id: $id, 
-	name: $name, 
-	nameEn: $nameEn, 
-	subtypes: $subtypes}
-  ) {
-    ... on InsertError { ...InsertError }
-    ... on RoleTypeGQLModel { ...Large }
-  }
+mutation studentInsert($userId: UUID!, $programId: UUID!, $id: UUID, $stateId: UUID, $semesterNumber: Int) {
+  studentInsert(student: {userId: $userId, programId: $programId, id: $id, stateId: $stateId, semesterNumber: $semesterNumber}) {
+  ... on StudentGQLModel { ...Large }
+  ... on StudentGQLModelInsertError { ...StudentGQLModelInsertError }
+}
 }
 
 
-fragment InsertError on InsertError {
-  __typename
-  msg
-  failed
-  code
-  location
-  input
-
+fragment StudentGQLModelInsertError on StudentGQLModelInsertError {
+    __typename
+    Entity {
+  ...Large
+}
+    msg
+    failed
+    code
+    location
+    input
+  
 }
 `
 

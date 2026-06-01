@@ -1,5 +1,5 @@
 import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared"
-
+import { SubjectFragment } from "../../SubjectGQLModel/Queries/Fragments"
 
 const ProgramFragmentStr = `
 fragment Program on ProgramGQLModel {
@@ -9,6 +9,9 @@ fragment Program on ProgramGQLModel {
   name
   nameEn
   lastchange
+  subjects {
+  ...Subject
+}
 }
 `
 
@@ -26,5 +29,5 @@ fragment Large on ProgramGQLModel {
 
 
 export const ProgramFragment = createQueryStrLazy(`${ProgramFragmentStr}`)
-export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, ProgramFragment)
+export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, ProgramFragment, SubjectFragment)
 export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment)

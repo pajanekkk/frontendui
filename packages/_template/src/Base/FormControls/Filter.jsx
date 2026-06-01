@@ -166,7 +166,7 @@ function encodeWhere(where) {
     return JSON.stringify(where);
 }
 
-export const ResetFilterButton = ({onClick,
+export const ResetFilterButton = ({ onClick,
     paramName = "where",
     replace = true,
     ...props
@@ -205,7 +205,7 @@ export const FilterButton = ({
         }
 
         const where = filterContext.readFilter(); // HOTOVÉ where
-        const extendedWhere = {where}
+        const extendedWhere = { where }
         if (onClick) return onClick(extendedWhere);
 
         const next = new URLSearchParams(searchParams);
@@ -587,7 +587,7 @@ function parseFloatOrNull(raw) {
 export const FloatFilter = ({
     id,
     label,
-    initialOp = "_gte",
+    initialOp = "_eq",
     initialValue = "",
 }) => {
     const filterContext = useFilterDesigner();
@@ -718,7 +718,7 @@ export const FloatFilter = ({
                             inputMode="decimal"
                             value={text}
                             onChange={handleChangeText}
-                            placeholder="0.0"
+                            placeholder="0"
                         />
                     </Col>
                 ) : (

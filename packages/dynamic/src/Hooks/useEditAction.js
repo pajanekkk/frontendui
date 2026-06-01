@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAsyncThunkAction } from "./useAsyncThunkAction";
 
+
 // jednoduchý shallowEqual (stejný jako u vás)
 const shallowEqual = (a, b) => {
     if (a === b) return true;
@@ -29,6 +30,7 @@ export const useEditAction = (
     item,
     options = {}
 ) => {
+
     const {
         mode = "confirm",
         delayMs = 600,
@@ -36,12 +38,14 @@ export const useEditAction = (
         // network = true,
         mapDraftToVars,
         commitOnBlur = true,
-        onCommit=()=>true,
+        onCommit = (nextDraft, result) => null,
     } = options;
 
     if (typeof AsyncAction !== "function") {
         throw new Error("useEditAction: AsyncAction musí být funkce (thunk factory)");
     }
+
+
 
     const { entity, run, loading, error, data } = useAsyncThunkAction(
         AsyncAction,
@@ -49,30 +53,20 @@ export const useEditAction = (
         { deferred: true, network: true }
     );
 
+
+
     // baseline = poslední "uložený" stav (primárně z entity)
     const [baseline, setBaseline] = useState(item || {});
     const [draft, setDraft] = useState(item || {});
-    
 
     // reset lokálního stavu při změně entity (jiné id / refetch / update ze store)
     useEffect(() => {
         const next = item || {};
         setBaseline(next);
         setDraft(next);
-    }, [entity]);
+    }, [entity, item]);
 
     const dirty = useMemo(() => !shallowEqual(draft, baseline), [draft, baseline]);
-
-    // debouncing pro live
-    const timerRef = useRef(null);
-    const clearTimer = () => {
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-            timerRef.current = null;
-        }
-    };
-
-    useEffect(() => () => clearTimer(), []);
 
     const toVars = useCallback(
         (d) => {
@@ -85,65 +79,244 @@ export const useEditAction = (
         [mapDraftToVars, entity, item]
     );
 
-    const commitNow = useCallback(
-        async (nextDraft) => {
-            console.log("useEditAction commitNow", dirty, nextDraft);
-            // posíláme přes run() -> thunk -> gqlClient.request(...)
-            const result = await run(toVars(nextDraft));
-            // po úspěchu nastav baseline; entity se stejně typicky aktualizuje přes middleware do store
-            // setBaseline(nextDraft);
-            onCommit(nextDraft, result);
-            // setDraft(nextDraft)
+    const inFlightPromiseRef = useRef(null);
+    const queuedDraftRef = useRef(null);
+    const id = useRef(crypto.randomUUID())
+    const latestLastchangeRef = useRef(item?.lastchange ?? null);
+
+    const prepareDraft = useCallback((draft) => {
+        return {
+            ...draft,
+            lastchange: latestLastchangeRef.current ?? draft?.lastchange,
+        };
+    }, []);
+
+    const commitNow = useCallback((nextDraft) => {
+
+        if (inFlightPromiseRef.current) {
+            queuedDraftRef.current = nextDraft;
+            setDraft(nextDraft);
+            return inFlightPromiseRef.current;
+        }
+
+        const executeCommit = async (rawDraft) => {
+            // const draftToSend = prepareDraft(rawDraft);
+            const draftToSend = {
+                ...rawDraft,
+                lastchange: latestLastchangeRef.current ?? rawDraft?.lastchange,
+            };
+            console.log(
+                "executeCommit.send", id,
+                draftToSend?.lastchange,
+                draftToSend?.email
+            );
+
+
+
+            const result = await run(toVars(draftToSend));
+
+
+
+            console.log(
+
+                "executeCommit.receive", id,
+
+                result?.lastchange,
+
+                result?.email
+
+            );
+
+
+
+            const savedDraft = {
+
+                ...draftToSend,
+
+                ...result,
+
+                lastchange: result?.lastchange ?? draftToSend?.lastchange,
+
+            };
+
+
+
+            latestLastchangeRef.current = savedDraft.lastchange;
+
+
+
+            onCommit(savedDraft, result);
+
+            setBaseline(savedDraft);
+
+            setDraft(savedDraft);
+
+
+
             return result;
-        },
-        [run, toVars]
-    );
+
+        };
+
+
+
+        const promise = (async () => {
+
+            let result = await executeCommit(nextDraft);
+
+
+
+            while (queuedDraftRef.current) {
+
+                const queuedDraft = queuedDraftRef.current;
+
+                queuedDraftRef.current = null;
+
+
+
+                const nextQueuedDraft = {
+
+                    ...queuedDraft,
+
+                    lastchange: latestLastchangeRef.current,
+
+                };
+
+
+
+                result = await executeCommit(nextQueuedDraft);
+
+            }
+
+
+
+            return result;
+
+        })().finally(() => {
+
+            inFlightPromiseRef.current = null;
+
+        });
+
+
+
+        inFlightPromiseRef.current = promise;
+
+        return promise;
+
+    }, [run, toVars, onCommit, prepareDraft]);
+
+
+
+    // debouncing pro live
+
+    const timerRef = useRef(null);
+
+    const clearTimer = useCallback(() => {
+
+        if (timerRef.current) {
+
+            clearTimeout(timerRef.current);
+
+            timerRef.current = null;
+
+        }
+
+    }, []);
+
+
+
+    useEffect(() => clearTimer(), []);
 
     const scheduleCommit = useCallback(
+
         (nextDraft) => {
+
             // console.log("useEditAction scheduleCommit delayMs", nextDraft, delayMs);
+
             clearTimer();
+
             timerRef.current = setTimeout(() => {
+
                 commitNow(nextDraft).catch(() => {
+
                     // error už je v hook state; nic dalšího tady nedělej
+
                 });
+
             }, delayMs);
+
         },
+
         [commitNow, delayMs]
+
     );
 
+
+
     // onChange kompatibilní s vaším stylem (input event / nebo celý objekt v target.value)
+
     const onChange = useCallback(
+
         (e) => {
+
             const fieldId = e?.target?.id;
+
             const value = e?.target?.value;
 
+
+
             let nextDraft;
+
             if (fieldId) {
+
                 nextDraft = { ...(draft || {}), [fieldId]: value };
+
             } else if (value && typeof value === "object") {
+
                 nextDraft = value;
+
             } else {
+
                 nextDraft = draft;
+
             }
+
+
 
             setDraft(nextDraft);
 
+
+
             if (mode === "live") {
+
                 scheduleCommit(nextDraft);
+
             }
+
         },
+
         [draft, mode, scheduleCommit]
+
     );
 
+
+
     const onBlur = useCallback(async () => {
+
         if (mode !== "live" || !commitOnBlur) return null;
+
         clearTimer();
+
         if (!dirty) return null;
+
         return commitNow(draft);
+
     }, [mode, commitOnBlur, dirty, draft, commitNow]);
 
+
+
     const onCancel = useCallback(() => {
+
         clearTimer();
         setDraft(baseline || {});
     }, [baseline]);
@@ -178,3 +351,4 @@ export const useEditAction = (
         commitNow,  // immediate commit draft
     };
 };
+

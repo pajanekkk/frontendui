@@ -12,11 +12,13 @@ import { BaseRouterSegments } from "../../../packages/_template/src/Base/Pages/R
 // import { GroupTypeRouterSegments } from "../../../packages/_template/src/GroupTypeGQLModel/Pages/RouterSegment";
 // import { RoleRouterSegments } from "../../../packages/_template/src/RoleGQLModel/Pages";
 // import { Page } from "../../../packages/_template/src/Base/Pages/Page";
+// import { EvaluationRouterSegments } from "../../../packages/student/src/EvaluationGQLModel/Pages/RouterSegment";
 import { AppNavbar } from "./AppNavbar";
-
+import { StateRouterSegments } from "../../../packages/student/src/StateGQLModel/Pages/RouterSegment";
 import { UserRouterSegments } from "../../../packages/student/src/UserGQLModel/Pages/RouterSegment";
 import { ProgramRouterSegments } from "../../../packages/student/src/ProgramGQLModel/Pages/RouterSegment";
 import { StudentRouterSegments } from "../../../packages/student/src/StudentGQLModel/Pages/RouterSegment";
+import { SubjectRouterSegments } from "../../../packages/student/src/SubjectGQLModel/Pages/RouterSegment";
 
 
 
@@ -39,8 +41,11 @@ const Routes = [
             ...UserRouterSegments,
             // ...GroupTypeRouterSegments,
             // ...RoleRouterSegments,
+            ...StateRouterSegments,
             ...StudentRouterSegments,
-            ...ProgramRouterSegments
+            ...ProgramRouterSegments,
+            ...SubjectRouterSegments
+            // ...EvaluationRouterSegments
         ],
     },
 ];

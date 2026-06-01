@@ -5,7 +5,7 @@ import { reduceToFirstEntity } from "../../../../dynamic/src/Store"
 
 const SearchQueryStr = `
 query SearchQuery($skip: Int, $limit: Int, $pattern: String) {
-  result: userPage(skip: $skip, limit: $limit, where: {fullname: {_ilike: $pattern}}) {
+  result: userPage(skip: $skip, limit: $limit, where: {email: {_ilike: $pattern}}) {
     ...Large
   }
 }
@@ -13,4 +13,4 @@ query SearchQuery($skip: Int, $limit: Int, $pattern: String) {
 
 
 export const SearchAsyncActionQuery = createQueryStrLazy(`${SearchQueryStr}`, LargeFragment)
-export const UserSearchAsyncAction = createAsyncGraphQLAction2(SearchAsyncActionQuery, reduceToFirstEntity)
+export const SearchAsyncAction = createAsyncGraphQLAction2(SearchAsyncActionQuery)

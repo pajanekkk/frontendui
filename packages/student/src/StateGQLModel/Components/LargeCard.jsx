@@ -1,6 +1,6 @@
 // import Row from "react-bootstrap/Row"
 import { MediumCard } from "./MediumCard"
-import { CardCapsule as CardCapsule_ } from "./CardCapsule"
+import { CardCapsule as CardCapsule_} from "./CardCapsule"
 import { Row } from "../../../../_template/src/Base/Components/Row"
 // import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { MediumContent as MediumContent_ } from "./MediumContent"
@@ -30,7 +30,7 @@ import { LeftColumn, MiddleColumn } from "../../../../_template/src/Base/Compone
  *   <p>Additional content for the middle column.</p>
  * </TemplateLargeCard>
  */
-export const LargeCard = ({ item, children, CardCapsule = CardCapsule_, MediumContent = MediumContent_ }) => {
+export const LargeCard = ({ item, children, CardCapsule=CardCapsule_, MediumContent=MediumContent_ }) => {
     // console.log("LargeCard.item", item)
     return (
         <CardCapsule item={item} >

@@ -1,6 +1,7 @@
 import { EntityLookup, Input } from "../../../../_template/src/Base"
 import { Select } from "../../../../_template/src/Base/FormControls/Select"
 import { SearchAsyncAction } from "../../ProgramGQLModel/Queries/SearchAsyncAction"
+import { UserSearchAsyncAction } from "../../UserGQLModel/Queries/SearchAsyncAction"
 import { UpdateBody } from "../Mutations/Update"
 
 
@@ -54,4 +55,36 @@ export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (
             {children}
         </>
     )
+}
+
+export const CreateContent = ({ item, onChange = (e) => null, onBlur = (e) => null, onConfirm = () => null, children }) => {
+
+    return (
+        <>
+            <EntityLookup
+                id="userId"
+                label="Jméno studenta"
+                type="string"
+                className="form-control"
+                asyncAction={UserSearchAsyncAction}
+                onBlur={onBlur}
+                value={item?.userId}
+                onChange={onChange}
+
+            />
+            <EntityLookup
+                id="programId"
+                label="Program"
+                type="string"
+                className="form-control"
+                asyncAction={SearchAsyncAction}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={item?.programId}
+
+            />
+
+        </>
+    )
+
 }

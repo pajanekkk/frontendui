@@ -17,6 +17,7 @@ import { ReadAsyncAction } from "../Queries"
 
 export const GeneratedContentBase = ({ item }) => {
     return (<>
+        Ahoj
         <Tree item={item} />
         <MediumCardScalars item={item} />
         <MediumCardVectors item={item} />
@@ -55,15 +56,15 @@ export const GeneratedContentBase = ({ item }) => {
  *   Struktura stránky (navbar + layout + subpage) nebo `null`, pokud `item` není dostupný.
  */
 const PageItemInnerStructure = ({
-    PageNavbar=null,
-    ItemLayout=LargeCard,
-    SubPage=GeneratedContentBase,
-    OtherComponents=[],
+    PageNavbar = null,
+    ItemLayout = LargeCard,
+    SubPage = GeneratedContentBase,
+    OtherComponents = [],
     children
 }) => {
     const { item } = useGQLEntityContext()
     if (!item) return <>Položka nenalezena</>
-    
+
     // Components: [A, B, C] => <A><B><C>{children}</C></B></A>
     const content = (OtherComponents || []).reduceRight((acc, Component) => {
         if (!Component) return acc;
@@ -79,12 +80,12 @@ const PageItemInnerStructure = ({
                     <SubPage item={item}>
                         {content}
                     </SubPage>
-                ):(
-                    {content}
+                ) : (
+                    { content }
                 )}
-            </ItemLayout>        
+            </ItemLayout>
         </>
-    );    
+    );
 }
 
 
@@ -112,18 +113,18 @@ const PageItemInnerStructure = ({
  * @returns {import("react").JSX.Element}
  *   Provider s navigací (`PageNavbar`) a obsahem stránky (`children`).
  */
-export const PageItemBase = ({ 
-    queryAsyncAction=ReadAsyncAction,
-    PageNavbar=()=>null,
-    ItemLayout=LargeCard,
-    SubPage=GeneratedContentBase,
+export const PageItemBase = ({
+    queryAsyncAction = ReadAsyncAction,
+    PageNavbar = () => null,
+    ItemLayout = LargeCard,
+    SubPage = GeneratedContentBase,
     children
 }) => {
-    const {id} = useParams()
-    const item = {id}
+    const { id } = useParams()
+    const item = { id }
     return (
         <AsyncActionProvider item={item} queryAsyncAction={queryAsyncAction}>
-            <PageItemInnerStructure 
+            <PageItemInnerStructure
                 PageNavbar={PageNavbar}
                 ItemLayout={ItemLayout}
                 SubPage={SubPage}
@@ -134,10 +135,10 @@ export const PageItemBase = ({
 }
 
 
-export const PageContent = ({queryById, queryVector, mutations, children, params}) => {
-     const gqlContext= useGQLEntityContext()
-     const {id, typename, action="view"} = useParams()
-     const { item } = gqlContext || {}
+export const PageContent = ({ queryById, queryVector, mutations, children, params }) => {
+    const gqlContext = useGQLEntityContext()
+    const { id, typename, action = "view" } = useParams()
+    const { item } = gqlContext || {}
     if (!item) return (<div>Položka nenalezena<pre>{JSON.stringify(gqlContext)}</pre></div>)
     let content = children
     const attribute_value = item?.[action]
@@ -146,7 +147,7 @@ export const PageContent = ({queryById, queryVector, mutations, children, params
             <Col>
                 <CardCapsule header="queryById">
                     <SimpleCardCapsuleRightCorner>
-                        <CopyButton className="btn btn-sm border-0" text={queryById}/>
+                        <CopyButton className="btn btn-sm border-0" text={queryById} />
                     </SimpleCardCapsuleRightCorner>
                     <pre>{queryById?.replaceAll(", ", ", \n\t").replaceAll("(", "(\n\t")}</pre>
                 </CardCapsule>
@@ -154,22 +155,22 @@ export const PageContent = ({queryById, queryVector, mutations, children, params
             <Col>
                 <CardCapsule header="queryVector">
                     <SimpleCardCapsuleRightCorner>
-                        <CopyButton className="btn btn-sm border-0" text={queryVector}/>
+                        <CopyButton className="btn btn-sm border-0" text={queryVector} />
                     </SimpleCardCapsuleRightCorner>
                     <pre>{queryVector?.replaceAll(", ", ", \n\t").replaceAll("(", "(\n\t")}</pre>
                 </CardCapsule>
             </Col>
             {Object.entries(mutations).map(([name, value]) => {
                 return (
-                <Col key={name}>
-                    <CardCapsule header={name}>
-                        <SimpleCardCapsuleRightCorner>
-                            <CopyButton className="btn btn-sm border-0" text={value}/>
-                        </SimpleCardCapsuleRightCorner>
-                        <pre>{value?.replaceAll(", ", ", \n\t").replaceAll("(", "(\n\t")}</pre>
-                        {/* <pre>{value?.replaceAll(", ", ", \n\t").replaceAll("(", ", (\n\t")}</pre> */}
-                    </CardCapsule>
-                </Col>
+                    <Col key={name}>
+                        <CardCapsule header={name}>
+                            <SimpleCardCapsuleRightCorner>
+                                <CopyButton className="btn btn-sm border-0" text={value} />
+                            </SimpleCardCapsuleRightCorner>
+                            <pre>{value?.replaceAll(", ", ", \n\t").replaceAll("(", "(\n\t")}</pre>
+                            {/* <pre>{value?.replaceAll(", ", ", \n\t").replaceAll("(", ", (\n\t")}</pre> */}
+                        </CardCapsule>
+                    </Col>
                 )
             })}
         </Row>
@@ -180,8 +181,8 @@ export const PageContent = ({queryById, queryVector, mutations, children, params
                 <MediumCardVectors key={"MediumCardVectors"} item={item} />
             </>
         )
-    
-    if (Array.isArray(attribute_value)) 
+
+    if (Array.isArray(attribute_value))
         content = <VectorAttribute attribute_name={action} item={item} />
     else if (attribute_value)
         content = <ScalarAttribute attribute_name={action} item={item} />
@@ -213,22 +214,22 @@ export const PageContent = ({queryById, queryVector, mutations, children, params
 }
 
 export const Page = ({ children }) => {
-    const {id, typename, action="view"} = useParams()
+    const { id, typename, action = "view" } = useParams()
     // const id = "51d101a0-81f1-44ca-8366-6cf51432e8d6";
-    const item = {id}
-    const { ByIdAsyncAction, queryById, queryVector, mutations } = useGQLType(typename || "RoleGQLModel")    
+    const item = { id }
+    const { ByIdAsyncAction, queryById, queryVector, mutations } = useGQLType(typename || "RoleGQLModel")
     return (
         // <div>Hello</div>
-        <>{ByIdAsyncAction&&
+        <>{ByIdAsyncAction &&
             <AsyncActionProvider item={item} queryAsyncAction={ByIdAsyncAction}>
                 <PageContent queryById={queryById} queryVector={queryVector} mutations={mutations} params={item}>
                     {children}
                 </PageContent>
             </AsyncActionProvider>
         }
-        {!ByIdAsyncAction&&
-            <div>No ByIdAsyncAction for type {typename}</div>
-        }
+            {!ByIdAsyncAction &&
+                <div>No ByIdAsyncAction for type {typename}</div>
+            }
 
         </>
     )

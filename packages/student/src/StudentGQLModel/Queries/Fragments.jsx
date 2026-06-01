@@ -1,6 +1,8 @@
 import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared"
 import { ProgramFragment } from "../../ProgramGQLModel/Queries/Fragments"
 import { UserFragment } from "../../UserGQLModel/Queries/Fragments"
+import { StateFragment } from "../../StateGQLModel/Queries/Fragments"
+import { SubjectFragment } from "../../SubjectGQLModel/Queries/Fragments"
 
 const LinkFragmentStr = `
 fragment Link on StudentGQLModel {
@@ -21,11 +23,14 @@ fragment Link on StudentGQLModel {
   ...User}
   
   stateId
+  state{
+  ...State
+  }
   semesterNumber
+
   startdate
   enddate
   valid
-
 }
 `
 
@@ -41,6 +46,16 @@ fragment Medium on StudentGQLModel {
 const LargeFragmentStr = `
 fragment Large on StudentGQLModel {
   ...Medium
+  evaluations{
+      order
+      classificationlevel{
+        name
+      }
+      semester{
+          id
+          subjectId
+    }
+  }
 }
 `
 const RoleFragmentStr = `
@@ -101,4 +116,4 @@ export const RBACFragment = createQueryStrLazy(`${RBACFragmentStr}`)
 
 export const LinkFragment = createQueryStrLazy(`${LinkFragmentStr}`)
 export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, LinkFragment, RBACFragment)
-export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment, ProgramFragment, UserFragment)
+export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment, ProgramFragment, UserFragment, StateFragment, SubjectFragment)
