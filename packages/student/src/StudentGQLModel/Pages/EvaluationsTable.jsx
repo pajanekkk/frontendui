@@ -1,33 +1,34 @@
 import React from "react"
 import { Table, Badge } from "react-bootstrap"
 
-const getSubjectName = (ev) =>
-    ev.program?.subjects?.name
-    || ev.program?.subjects?.name
-    || ev.semester?.subjectId
-    || "—"
-
+const getSubjectName = (ev, item) => {
+    const subjectId = ev.semester?.subjectId
+    if (!subjectId || !item?.program?.subjects) return "—"
+    const subject = item.program.subjects.find(s => s.id === subjectId)
+    return subject?.name ?? "—"
+}
 const getSemesterLabel = (ev) =>
-    ev.semester?.semesterNumber ?? ev.semester?.label ?? ev.semester?.id ?? "—"
+    ev.semester?.order ?? ev.semester?.id ?? "—"
 
 const gradeText = (ev) =>
-    ev.grade ?? ev.classificationlevel?.name ?? "—"
+    ev.classificationlevel?.name ?? "—"
 
 const gradeBadgeVariant = (ev) => {
-    if (ev.passed === true) return "success"
-    if (ev.passed === false) return "danger"
+    if (ev.classificationlevel?.name == 'F') return "danger"
+    if (ev.classificationlevel?.name == 'A' || ev.classificationlevel?.name == 'B' || ev.classificationlevel?.name == 'C' || ev.classificationlevel?.name == 'D' || ev.classificationlevel?.name == 'E') return "success"
     return "secondary"
 }
 
-export const EvaluationsTable = ({ evaluations = [] }) => {
+export const EvaluationsTable = ({ evaluations = [], item }) => {
     const rows = (evaluations || []).slice().sort((a, b) => {
-        const sa = a.semester?.semesterNumber ?? 0
-        const sb = b.semester?.semesterNumber ?? 0
-        if (sa !== sb) return sb - sa
-        const oa = typeof a.order === "number" ? a.order : 0
-        const ob = typeof b.order === "number" ? b.order : 0
-        return ob - oa
+        const sa = a.semester?.order ?? 0
+        const sb = b.semester?.order ?? 0
+        if (sa !== sb) return sa - sb  // razeni vzestupne
+        const oa = typeof a.program?.subjects?.name === "string" ? a.program?.subjects?.name : 0
+        const ob = typeof b.program?.subjects?.name === "string" ? b.program?.subjects?.name : 0
+        return oa - ob
     })
+
 
     if (!rows.length) return <div>Žádné hodnocení k zobrazení</div>
 
@@ -44,12 +45,14 @@ export const EvaluationsTable = ({ evaluations = [] }) => {
             <tbody>
                 {rows.map((ev) => (
                     <tr key={ev.id || `${ev.semester?.id}-${ev.order || 0}-${Math.random()}`}>
-                        <td>{getSubjectName(ev)}</td>
+                        <td>{getSubjectName(ev, item)}</td>
                         <td>{getSemesterLabel(ev)}</td>
                         <td>
                             <Badge bg={gradeBadgeVariant(ev)}>{gradeText(ev)}</Badge>
                         </td>
-                        <td>{ev.order ?? "—"}</td>
+                        <td style={{
+                            color: ev.classificationlevel?.name == 'F' ? 'red' : 'primary',
+                        }}>{ev.order ?? "—"}</td>
                     </tr>
                 ))}
             </tbody>

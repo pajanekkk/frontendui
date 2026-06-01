@@ -8,7 +8,7 @@ const EvaluationsPage = ({ item }) => {
     return (
         <Card body>
             <h5>Průběh studia / Hodnocení</h5>
-            <EvaluationsTable evaluations={evaluations} />
+            <EvaluationsTable evaluations={evaluations} item={item} />
         </Card>
     )
 }

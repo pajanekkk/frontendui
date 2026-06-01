@@ -42,6 +42,13 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
   * chyba při rychlé změně za sebou není zaviněna naší chybou, ale je to globální chyba
   * nutné rozšířit o další modely, jinak všechno v pořádku
 
+### 1.6.2026
+- mutace create, delete
+- pridani modelu Subject
+- pridani modelu State
+- tabulka v1
+
+
 ## Jak spustit app?
 
 ```cmd

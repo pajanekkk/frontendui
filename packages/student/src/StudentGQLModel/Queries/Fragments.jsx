@@ -46,13 +46,16 @@ fragment Medium on StudentGQLModel {
 const LargeFragmentStr = `
 fragment Large on StudentGQLModel {
   ...Medium
+  
   evaluations{
-      order
+    order
       classificationlevel{
         name
+        ordervalue
       }
       semester{
           id
+          order
           subjectId
     }
   }
