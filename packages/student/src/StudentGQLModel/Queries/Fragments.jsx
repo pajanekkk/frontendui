@@ -47,7 +47,7 @@ const LargeFragmentStr = `
 fragment Large on StudentGQLModel {
   ...Medium
   
-  evaluations{
+  evaluations(limit: 100){
     order
       classificationlevel{
         name
