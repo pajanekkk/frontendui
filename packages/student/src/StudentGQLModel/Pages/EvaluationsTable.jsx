@@ -1,6 +1,12 @@
 import React from "react"
 import { Table, Badge } from "react-bootstrap"
 
+/**
+ * Vrátí název předmětu pro hodnocení podle ID předmětu v semestru
+ * @param {object} ev - hodnocení studenta
+ * @param {object} item - student, program s predmety
+ * @returns {string} název předmětu nebo pomlčka pokud predmet neni nalezen
+ */
 const getSubjectName = (ev, item) => {
     const subjectId = ev.semester?.subjectId
     if (!subjectId || !item?.program?.subjects) return "—"
@@ -24,9 +30,6 @@ export const EvaluationsTable = ({ evaluations = [], item }) => {
         const sa = a.semester?.order ?? 0
         const sb = b.semester?.order ?? 0
         if (sa !== sb) return sa - sb  // razeni vzestupne
-        const oa = typeof a.program?.subjects?.name === "string" ? a.program?.subjects?.name : 0
-        const ob = typeof b.program?.subjects?.name === "string" ? b.program?.subjects?.name : 0
-        return oa - ob
     })
 
 
@@ -44,7 +47,7 @@ export const EvaluationsTable = ({ evaluations = [], item }) => {
             </thead>
             <tbody>
                 {rows.map((ev) => (
-                    <tr key={ev.id || `${ev.semester?.id}-${ev.order || 0}-${Math.random()}`}>
+                    <tr key={ev.id || `${ev.semester?.id}-${ev.order || 0}`}>
                         <td>{getSubjectName(ev, item)}</td>
                         <td>{getSemesterLabel(ev)}</td>
                         <td>

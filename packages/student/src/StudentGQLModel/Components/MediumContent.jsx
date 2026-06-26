@@ -114,28 +114,7 @@ export const MediumContent = ({ item, children }) => {
 
 
             <hr />
-            <Attribute label={"Vytvořeno"}>
-                <Link item={item}>
-                    {formatDateTime(item?.created) || "Chyba dat!!"}
-                </Link>
-            </Attribute>
 
-            <Attribute label={"Kdy změněno"}>
-                {formatDateTime(item?.lastchange) || "Chyba dat!!"}
-
-            </Attribute>
-
-            <Attribute label={"Kým změněno"}>
-                <Link item={item}>
-                    {item?.changedbyId || "Chyba dat!!"}
-                </Link>
-            </Attribute>
-
-            <Attribute label={"Moje role"}>
-                {item?.rbacobject?.currentUserRoles?.length > 0 ? item.rbacobject.currentUserRoles.map(role => role.roletype?.name).join(", ") : "Žádné role!"}
-            </Attribute>
-
-            <hr />
             {/* 
             <Attribute label={"ID studenta"}>
 
@@ -145,9 +124,9 @@ export const MediumContent = ({ item, children }) => {
             </Attribute> */}
 
             <Attribute label={"Program"}>
-                <Link item={item}>
+                <a href={`/student/program/ProgramGQLModel/${item?.program?.id}`}>
                     {item?.program?.name || "Chyba dat!!"}
-                </Link>
+                </a>
             </Attribute>
 
 
@@ -167,8 +146,31 @@ export const MediumContent = ({ item, children }) => {
 
             <Attribute label={"Stav"}>
                 <Link item={item}>
-                    {item?.valid || "Chyba dat"}
+                    {item?.name ?? item?.id ?? "Chyba dat"}
                 </Link>
+            </Attribute>
+
+            <hr />
+
+            <Attribute label={"Vytvořeno"}>
+                <Link item={item}>
+                    {formatDateTime(item?.created) || "Chyba dat!!"}
+                </Link>
+            </Attribute>
+
+            <Attribute label={"Kdy změněno"}>
+                {formatDateTime(item?.lastchange) || "Chyba dat!!"}
+
+            </Attribute>
+
+            <Attribute label={"Kým změněno"}>
+                <Link item={item}>
+                    {item?.changedbyId || "Chyba dat!!"}
+                </Link>
+            </Attribute>
+
+            <Attribute label={"Moje role"}>
+                {item?.rbacobject?.currentUserRoles?.length > 0 ? item.rbacobject.currentUserRoles.map(role => role.roletype?.name).join(", ") : "Žádné role!"}
             </Attribute>
 
             <hr />
