@@ -62,4 +62,4 @@ npm run build -w @pajapaja/app_student
 ```
 
 ### Odkaz na npmjs.org:
-- https://www.npmjs.com/package/@pajapaja/student
+- https://www.npmjs.com/package/@pajapaja/app_student
