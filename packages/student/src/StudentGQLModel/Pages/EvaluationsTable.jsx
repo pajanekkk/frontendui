@@ -1,65 +1,107 @@
 import React from "react"
-import { Table, Badge } from "react-bootstrap"
+import { Badge, Card, Row, Col, Table } from "react-bootstrap"
 
 /**
  * Vrátí název předmětu pro hodnocení podle ID předmětu v semestru
  * @param {object} ev - hodnocení studenta
  * @param {object} item - student, program s predmety
- * @returns {string} název předmětu nebo pomlčka pokud predmet neni nalezen
+ * @returns {string}
  */
 const getSubjectName = (ev, item) => {
     const subjectId = ev.semester?.subjectId
     if (!subjectId || !item?.program?.subjects) return "—"
-    const subject = item.program.subjects.find(s => s.id === subjectId)
+    const subject = item.program.subjects.find((s) => s.id === subjectId)
     return subject?.name ?? "—"
 }
-const getSemesterLabel = (ev) =>
-    ev.semester?.order ?? ev.semester?.id ?? "—"
-
+/**
+ * Vrátí text známky pro hodnocení.
+ * @param {object} ev - hodnocení studenta
+ * @returns {string} text známky nebo pomlčka
+ */
 const gradeText = (ev) =>
     ev.classificationlevel?.name ?? "—"
 
+/**
+ * Vrátí barvu Badge podle typu známky.
+ * @param {object} ev - hodnocení studenta
+ * @returns {string} název varianty badge
+ */
 const gradeBadgeVariant = (ev) => {
-    if (ev.classificationlevel?.name == 'F') return "danger"
-    if (ev.classificationlevel?.name == 'A' || ev.classificationlevel?.name == 'B' || ev.classificationlevel?.name == 'C' || ev.classificationlevel?.name == 'D' || ev.classificationlevel?.name == 'E') return "success"
+    if (ev.classificationlevel?.name == "F") return "danger"
+    if (["A", "B", "C", "D", "E"].includes(ev.classificationlevel?.name)) return "success"
     return "secondary"
 }
 
+/**
+ * Seskupí hodnocení podle semestru.
+ * @param {Array<object>} evaluations - seznam hodnocení studenta
+ * @returns {Array<object>} pole skupin se semestry a jejich položkami
+ */
+const groupBySemester = (evaluations = []) => {
+    const groups = evaluations.reduce((acc, ev) => {
+        const semOrder = ev.semester?.order ?? ev.semester?.id ?? 0
+        const key = String(semOrder)
+        if (!acc[key]) acc[key] = { order: semOrder, values: [] }
+        acc[key].values.push(ev)
+        return acc
+    }, {})
+
+    return Object.values(groups).sort((a, b) => a.order - b.order)
+}
+/**
+ * Vykreslí přehled hodnocení studenta jako karty seskupené podle semestru.
+ * @param {Array<object>} evaluations - seznam hodnocení studenta
+ * @param {object} item - student spolu s jeho programem
+ * @returns {JSX.Element} komponenta s kartami semestrů
+ */
 export const EvaluationsTable = ({ evaluations = [], item }) => {
-    const rows = (evaluations || []).slice().sort((a, b) => {
-        const sa = a.semester?.order ?? 0
-        const sb = b.semester?.order ?? 0
-        if (sa !== sb) return sa - sb  // razeni vzestupne
-    })
+    const groups = groupBySemester(evaluations || [])
 
-
-    if (!rows.length) return <div>Žádné hodnocení k zobrazení</div>
+    if (!groups.length) return <div>Žádné hodnocení k zobrazení</div>
 
     return (
-        <Table striped bordered hover size="sm">
-            <thead>
-                <tr>
-                    <th>Předmět</th>
-                    <th>Semestr</th>
-                    <th>Známka</th>
-                    <th>Pokus</th>
-                </tr>
-            </thead>
-            <tbody>
-                {rows.map((ev) => (
-                    <tr key={ev.id || `${ev.semester?.id}-${ev.order || 0}`}>
-                        <td>{getSubjectName(ev, item)}</td>
-                        <td>{getSemesterLabel(ev)}</td>
-                        <td>
-                            <Badge bg={gradeBadgeVariant(ev)}>{gradeText(ev)}</Badge>
-                        </td>
-                        <td style={{
-                            color: ev.classificationlevel?.name == 'F' ? 'red' : 'primary',
-                        }}>{ev.order ?? "—"}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </Table>
+        <Row xs={1} md={2} className="g-3">
+            {groups.map((group) => (
+                <Col key={`semester-${group.order}`}>
+                    <Card className="h-100 shadow-sm border-dark">
+                        <Card.Header className="bg-white border-bottom">
+                            <h5 className="mb-0">Semestr {group.order}</h5>
+                        </Card.Header>
+                        <Card.Body className="p-0">
+                            <Table borderless size="sm" className="mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Předmět</th>
+                                        <th>Známka</th>
+                                        <th>Pokus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {group.values.map((ev) => (
+                                        <tr key={ev.id || `${ev.semester?.id}-${ev.order || 0}`}>
+                                            <td>{getSubjectName(ev, item)}</td>
+                                            <td>
+                                                <Badge bg={gradeBadgeVariant(ev)} pill>
+                                                    {gradeText(ev)}
+                                                </Badge>
+                                            </td>
+                                            <td
+                                                className="text-center"
+                                                style={{
+                                                    color: ev.classificationlevel?.name == "F" ? "red" : "inherit",
+                                                }}
+                                            >
+                                                {ev.order ?? "—"}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            ))}
+        </Row>
     )
 }
 

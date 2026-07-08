@@ -76,33 +76,42 @@ export const buildTableDef = (data) => {
 
     result["tools"] = {
         label: "Nástroje",
-        component: ({row}) => <td><KebabMenu actions={[
+        component: ({ row }) => <td><KebabMenu actions={[
             // { label: "Editovat", onClick: () => console.log("edit") },
             // { label: "Smazat", onClick: () => console.log("delete") },
             // { label: "Detail", onClick: () => console.log("detail") },
-            { children: <Link 
+            {
+                children: <Link
                     className="btn btn-sm btn-outline-secondary border-0 text-start w-100"
                     item={row}
-                >Detail</Link> },
-            { children: <UpdateLink 
-                className="btn btn-sm btn-outline-secondary border-0 text-start w-100"
-                item={row}
-                action="edit"
-                >Editovat</UpdateLink> },
-            { children: <UpdateButton 
+                >Detail</Link>
+            },
+            {
+                children: <UpdateLink
                     className="btn btn-sm btn-outline-secondary border-0 text-start w-100"
                     item={row}
-                >Editovat (zde)</UpdateButton> },
-            { children: <DeleteButton 
-                className="btn btn-sm btn-outline-secondary border-0 text-start w-100"  
-                >Smazat</DeleteButton> },
+                    action="edit"
+                >Editovat</UpdateLink>
+            },
+            {
+                children: <UpdateButton
+                    className="btn btn-sm btn-outline-secondary border-0 text-start w-100"
+                    item={row}
+                >Editovat (zde)</UpdateButton>
+            },
+            {
+                children: <DeleteButton
+                    className="btn btn-sm btn-outline-secondary border-0 text-start w-100"
+                >Smazat</DeleteButton>
+            },
         ]} /></td>,
     }
 
     return result
 }
 
-
+// odstranění zavření při kliku mimo, dělalo to nepořádek, 
+// kdy se i při kliku uvnitř zavřelo dialogový okno na hlavni view strance
 export const KebabMenu = ({ actions = [] }) => {
     const [open, setOpen] = useState(false);
     const btnRef = useRef(null);
@@ -111,29 +120,15 @@ export const KebabMenu = ({ actions = [] }) => {
 
     const close = () => setOpen(false);
 
-    // zavření při kliku mimo (funguje i s portalem)
     useEffect(() => {
         if (!open) return;
-
-        const onMouseDown = (e) => {
-            const btn = btnRef.current;
-            const menu = menuRef.current;
-            if (!btn || !menu) return;
-
-            if (btn.contains(e.target)) return;
-            if (menu.contains(e.target)) return;
-
-            close();
-        };
 
         const onKeyDown = (e) => {
             if (e.key === "Escape") close();
         };
 
-        document.addEventListener("mousedown", onMouseDown);
         document.addEventListener("keydown", onKeyDown);
         return () => {
-            document.removeEventListener("mousedown", onMouseDown);
             document.removeEventListener("keydown", onKeyDown);
         };
     }, [open]);
@@ -214,7 +209,10 @@ export const KebabMenu = ({ actions = [] }) => {
             <button
                 ref={btnRef}
                 className="btn btn-sm btn-outline-secondary border-1"
-                onClick={() => setOpen((o) => !o)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen((o) => !o);
+                }}
                 aria-expanded={open}
                 aria-haspopup="menu"
                 aria-label="Menu"

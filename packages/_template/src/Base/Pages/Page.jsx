@@ -17,7 +17,6 @@ import { ReadAsyncAction } from "../Queries"
 
 export const GeneratedContentBase = ({ item }) => {
     return (<>
-        Ahoj
         <Tree item={item} />
         <MediumCardScalars item={item} />
         <MediumCardVectors item={item} />
