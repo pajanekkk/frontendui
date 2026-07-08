@@ -46,8 +46,11 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - mutace create, delete
 - pridani modelu Subject
 - pridani modelu State
-- tabulka v1
+- tabulka s hodnocením v1
 
+### 8.7.2026
+- tabulka s hodnocením v2 (nyní dle semestru)
+- uprava /view stranky
 
 ## Jak spustit app?
 
