@@ -73,7 +73,11 @@ const ProgramSubjectsTable = ({ subjects = [] }) => {
                             {subjects.map((subject, index) => (
                                 <tr key={subject.id ?? `${subject.name}-${index}`}>
                                     <td>{index + 1}</td>
-                                    <td>{subject.name ?? "—"}</td>
+                                    <td>
+                                        <a href={`/subject/SubjectGQLModel/view/${subject?.id}`}>
+                                            {subject.name ?? "—"}
+                                        </a>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

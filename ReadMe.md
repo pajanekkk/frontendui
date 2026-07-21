@@ -52,6 +52,12 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - tabulka s hodnocením v2 (nyní dle semestru)
 - uprava /view stranky
 
+### 21.7.2026
+- přidána collapsible tabulka s předmětama
+- odebráno debug info
+- přidány linky na ostatní projekty (not finished!)
+
+
 ## Jak spustit app?
 
 ```cmd
