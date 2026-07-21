@@ -29,7 +29,7 @@ export const MediumContent = ({ item, children }) => {
 
 
             <Attribute label={"Program"}>
-                <a href={`/student/program/ProgramGQLModel/${item?.program?.id}`}>
+                <a href={`/program/ProgramGQLModel/view/${item?.program?.id}`}>
                     {item?.program?.name || "Chyba dat!!"}
                 </a>
             </Attribute>
@@ -80,10 +80,11 @@ export const MediumContent = ({ item, children }) => {
 
             <hr />
 
-            <pre>
+            {/*             <pre>
                 {JSON.stringify(item, null, 2)}
 
             </pre>
+         */}
         </>
 
 

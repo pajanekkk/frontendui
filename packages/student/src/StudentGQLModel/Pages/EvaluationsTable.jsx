@@ -1,5 +1,5 @@
 import React from "react"
-import { Badge, Card, Row, Col, Table } from "react-bootstrap"
+import { Accordion, Badge, Card, Row, Col, Table } from "react-bootstrap"
 
 /**
  * Vrátí název předmětu pro hodnocení podle ID předmětu v semestru
@@ -48,6 +48,42 @@ const groupBySemester = (evaluations = []) => {
 
     return Object.values(groups).sort((a, b) => a.order - b.order)
 }
+
+/**
+ * Vykreslí rozbalovací tabulku s předměty programu.
+ * @param {Array<object>} subjects - seznam předmětů programu
+ * @returns {JSX.Element|null} komponenta s rozbalovací tabulkou
+ */
+const ProgramSubjectsTable = ({ subjects = [] }) => {
+    if (!subjects.length) return null
+
+    return (
+        <Accordion className="mb-3">
+            <Accordion.Item eventKey="program-subjects">
+                <Accordion.Header>Předměty programu</Accordion.Header>
+                <Accordion.Body className="p-0">
+                    <Table borderless size="sm" className="mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Název předmětu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {subjects.map((subject, index) => (
+                                <tr key={subject.id ?? `${subject.name}-${index}`}>
+                                    <td>{index + 1}</td>
+                                    <td>{subject.name ?? "—"}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </Accordion.Body>
+            </Accordion.Item>
+        </Accordion>
+    )
+}
+
 /**
  * Vykreslí přehled hodnocení studenta jako karty seskupené podle semestru.
  * @param {Array<object>} evaluations - seznam hodnocení studenta
@@ -56,52 +92,61 @@ const groupBySemester = (evaluations = []) => {
  */
 export const EvaluationsTable = ({ evaluations = [], item }) => {
     const groups = groupBySemester(evaluations || [])
+    const programSubjects = item?.program?.subjects ?? []
 
-    if (!groups.length) return <div>Žádné hodnocení k zobrazení</div>
+    if (!groups.length && !programSubjects.length) return <div>Žádné hodnocení k zobrazení</div>
 
     return (
-        <Row xs={1} md={2} className="g-3">
-            {groups.map((group) => (
-                <Col key={`semester-${group.order}`}>
-                    <Card className="h-100 shadow-sm border-dark">
-                        <Card.Header className="bg-white border-bottom">
-                            <h5 className="mb-0">Semestr {group.order}</h5>
-                        </Card.Header>
-                        <Card.Body className="p-0">
-                            <Table borderless size="sm" className="mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Předmět</th>
-                                        <th>Známka</th>
-                                        <th>Pokus</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {group.values.map((ev) => (
-                                        <tr key={ev.id || `${ev.semester?.id}-${ev.order || 0}`}>
-                                            <td>{getSubjectName(ev, item)}</td>
-                                            <td>
-                                                <Badge bg={gradeBadgeVariant(ev)} pill>
-                                                    {gradeText(ev)}
-                                                </Badge>
-                                            </td>
-                                            <td
-                                                className="text-center"
-                                                style={{
-                                                    color: ev.classificationlevel?.name == "F" ? "red" : "inherit",
-                                                }}
-                                            >
-                                                {ev.order ?? "—"}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            ))}
-        </Row>
+        <>
+            <ProgramSubjectsTable subjects={programSubjects} />
+
+            {groups.length ? (
+                <Row xs={1} md={2} className="g-3">
+                    {groups.map((group) => (
+                        <Col key={`semester-${group.order}`}>
+                            <Card className="h-100 shadow-sm border-dark">
+                                <Card.Header className="bg-white border-bottom">
+                                    <h5 className="mb-0">Semestr {group.order}</h5>
+                                </Card.Header>
+                                <Card.Body className="p-0">
+                                    <Table borderless size="sm" className="mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Předmět</th>
+                                                <th>Známka</th>
+                                                <th>Pokus</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {group.values.map((ev) => (
+                                                <tr key={ev.id || `${ev.semester?.id}-${ev.order || 0}`}>
+                                                    <td>{getSubjectName(ev, item)}</td>
+                                                    <td>
+                                                        <Badge bg={gradeBadgeVariant(ev)} pill>
+                                                            {gradeText(ev)}
+                                                        </Badge>
+                                                    </td>
+                                                    <td
+                                                        className="text-center"
+                                                        style={{
+                                                            color: ev.classificationlevel?.name == "F" ? "red" : "inherit",
+                                                        }}
+                                                    >
+                                                        {ev.order ?? "—"}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            ) : (
+                <div className="text-muted">Žádné hodnocení k zobrazení</div>
+            )}
+        </>
     )
 }
 

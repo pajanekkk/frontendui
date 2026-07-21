@@ -73,7 +73,7 @@ export const Table = ({ data = [] }) => {
                             </div>
                         </td>
                         <td>
-                            <a href={`student/program/ProgramGQLModel/${row?.program?.id}`}>
+                            <a href={`/program/ProgramGQLModel/view/${row?.program?.id}`}>
                                 {renderRelation(row?.program, "Bez programu")}
                             </a>
                         </td>

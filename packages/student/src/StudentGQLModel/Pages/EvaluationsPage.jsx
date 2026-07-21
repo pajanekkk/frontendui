@@ -7,7 +7,9 @@ const EvaluationsPage = ({ item }) => {
     const evaluations = item.evaluations || []
     return (
         <Card body>
-            <h5>Průběh studia / hodnocení ve studijním programu {item?.program?.name}</h5>
+            <h5>
+                Průběh studia / hodnocení ve studijním programu <a href={`/program/ProgramGQLModel/view/${item?.program?.id}`}>{item?.program?.name}</a>
+            </h5>
             <EvaluationsTable evaluations={evaluations} item={item} />
         </Card>
     )

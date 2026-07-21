@@ -33,6 +33,7 @@ export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (
 
     return (
         <>
+
             <Input
                 id="semesterNumber"
                 label="Číslo semestru"
