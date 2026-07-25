@@ -52,7 +52,7 @@ export const Table = ({ data = [] }) => {
         <BootstrapTable striped bordered hover size="sm" className="mb-0">
             <thead>
                 <tr>
-                    <th>Uživatel</th>
+                    <th>Student</th>
                     <th>Program</th>
                     <th>Stav</th>
                     <th>Semestr</th>
@@ -68,7 +68,7 @@ export const Table = ({ data = [] }) => {
                         <td>
                             <div className="fw-semibold">
                                 <Link item={row} className="fw-semibold text-decoration-noLinkne">
-                                    {row?.user?.fullname || "Bez uživatele"}
+                                    {row?.user?.fullname || "Bez studenta"}
                                 </Link>
                             </div>
                         </td>

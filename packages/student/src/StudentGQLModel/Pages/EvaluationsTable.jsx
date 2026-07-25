@@ -21,6 +21,11 @@ const getSubjectName = (ev, item) => {
 const gradeText = (ev) =>
     ev.classificationlevel?.name ?? "—"
 
+const getPoints = (ev, item) => {
+    const points = ev.points
+    return points
+}
+
 /**
  * Vrátí barvu Badge podle typu známky.
  * @param {object} ev - hodnocení studenta
@@ -118,6 +123,7 @@ export const EvaluationsTable = ({ evaluations = [], item }) => {
                                             <tr>
                                                 <th>Předmět</th>
                                                 <th>Známka</th>
+                                                <th>Počet bodů</th>
                                                 <th>Pokus</th>
                                             </tr>
                                         </thead>
@@ -130,6 +136,7 @@ export const EvaluationsTable = ({ evaluations = [], item }) => {
                                                             {gradeText(ev)}
                                                         </Badge>
                                                     </td>
+                                                    <td className="text-center">{getPoints(ev)}</td>
                                                     <td
                                                         className="text-center"
                                                         style={{

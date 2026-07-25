@@ -10,16 +10,16 @@ import { name } from "happy-dom/lib/PropertySymbol"
 export const MediumContent = ({ item, children }) => {
     return (
         <>
-            <Attribute label={"ID"}>
+            <Attribute label={"Studentovo ID"}>
                 <Link item={item}>
                     {item?.id || "Chyba dat!!"}
                 </Link>
             </Attribute>
 
             <Attribute label={"Jméno studenta"}>
-                <Link item={item}>
+                <a href={`/ug/UserGQLModel/view/${item?.userId}`}>
                     {item?.user?.fullname || "Chyba dat"}
-                </Link>
+                </a>
             </Attribute>
 
 
@@ -36,42 +36,41 @@ export const MediumContent = ({ item, children }) => {
 
 
             <Attribute label={"Číslo semestru"}>
-                <Link item={item}>
-                    {item?.semesterNumber || "Chyba dat!!"}
-                </Link>
+                <span item={item}>
+                    {item?.semesterNumber ?? "Chyba dat!!"}
+                </span>
             </Attribute>
 
 
 
             <Attribute label={"Začátek semestru"}>
-                <Link item={item}>
+                <span item={item}>
                     {formatDateTime(item?.startdate) || "Chyba dat!!"}
-                </Link>
+                </span>
             </Attribute>
 
             <Attribute label={"Stav"}>
                 <Link item={item}>
-                    {item?.name ?? item?.id ?? "Chyba dat"}
+                    {item?.state?.name ?? item?.state?.id ?? "Chyba dat"}
                 </Link>
             </Attribute>
 
             <hr />
 
             <Attribute label={"Vytvořeno"}>
-                <Link item={item}>
+                <span item={item}>
                     {formatDateTime(item?.created) || "Chyba dat!!"}
-                </Link>
+                </span>
             </Attribute>
 
             <Attribute label={"Kdy změněno"}>
                 {formatDateTime(item?.lastchange) || "Chyba dat!!"}
-
             </Attribute>
 
             <Attribute label={"Kým změněno"}>
-                <Link item={item}>
-                    {item?.changedbyId || "Chyba dat!!"}
-                </Link>
+                <a href={`/ug/UserGQLModel/view/${item?.changedbyId}`}>
+                    {item?.changedby?.fullname || "Chyba dat!!"}
+                </a>
             </Attribute>
 
             <Attribute label={"Moje role"}>

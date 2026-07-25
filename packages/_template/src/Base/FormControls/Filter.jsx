@@ -701,12 +701,12 @@ export const FloatFilter = ({
             <Row>
                 <Col>
                     <select className="form-control" value={op} onChange={handleChangeOp}>
-                        <option value="_eq">_eq</option>
-                        <option value="_gt">_gt</option>
+                        <option value="_eq">stejné</option>
+                        <option value="_gt">větší než</option>
                         <option value="_gte">_gte</option>
-                        <option value="_lt">_lt</option>
+                        <option value="_lt">menší než</option>
                         <option value="_lte">_lte</option>
-                        <option value="_between">_between</option>
+                        <option value="_between">mezi</option>
                     </select>
                 </Col>
 

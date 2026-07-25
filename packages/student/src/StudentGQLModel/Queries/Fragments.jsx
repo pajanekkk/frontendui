@@ -12,9 +12,13 @@ fragment Link on StudentGQLModel {
   created
   createdbyId
   changedbyId
+  changedby{
+    ...User
+  }
   rbacobjectId
 
   userId
+
   programId
   program{
   ...Program
@@ -49,6 +53,7 @@ fragment Large on StudentGQLModel {
   
   evaluations(limit: 100){
     order
+    points
       classificationlevel{
         name
         ordervalue
