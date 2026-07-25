@@ -57,6 +57,10 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - odebráno debug info
 - přidány linky na ostatní projekty (not finished!)
 
+### 25.7.2026
+- přidání bodů (nutná úprava systemdata)
+- další linky
+- lehká úprava filtru
 
 ## Jak spustit app?
 
