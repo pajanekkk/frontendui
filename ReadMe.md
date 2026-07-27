@@ -2,6 +2,12 @@
 
 Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, předměty, semestry v rámci modelu StudentGQLModel + ProgramGQLModel + UserGQLModel
 
+
+<h2 align="center">DŮLEŽITÉ!!!</h2>
+
+### PRO SPUŠTĚNÍ STACKU POUŽÍVAT TENTO REPOZITÁŘ!!!:
+### https://github.com/pajanekkk/docker-stack
+
 <h2 align="center">Změny a poznatky</h2>
 
 ### 12.4.2026
