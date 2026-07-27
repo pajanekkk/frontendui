@@ -17,6 +17,16 @@ export const PageLink = ({ children, preserveHash = true, preserveSearch = true,
     );
 };
 
+/**
+ * Karta "Nástroje" s akcemi nad studentem.
+ *
+ * Není tu žádná podmínka na oprávnění — o tom, co uživatel uvidí, rozhoduje
+ * každé tlačítko samo podle permissions nastavených v Create.jsx / Update.jsx /
+ * Delete.jsx. Komu operace nepřísluší, tomu se tlačítko vůbec nevykreslí.
+ *
+ * @param {object} item - student, kterého se akce týkají
+ * @returns {JSX.Element}
+ */
 export const InteractiveMutations = ({ item }) => {
     return (
         <CardCapsule item={item} title="Nástroje">

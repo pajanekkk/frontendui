@@ -3,6 +3,13 @@ import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAs
 import { LargeFragment } from "./Fragments"
 import { reduceToFirstEntity } from "../../../../dynamic/src/Store"
 
+/**
+ * Hledání programu podle názvu — pohání našeptávač v EntityLookup.
+ *
+ * _ilike hledá bez ohledu na velikost písmen a $pattern se posílá s procenty
+ * (%algeb%), takže stačí zadat kus názvu. Díky tomu uživatel nemusí znát
+ * ani přesný název, natož UUID programu.
+ */
 const SearchQueryStr = `
 query SearchQuery($skip: Int, $limit: Int, $pattern: String) {
   result: programPage(skip: $skip, limit: $limit, where: {name: {_ilike: $pattern}}) {

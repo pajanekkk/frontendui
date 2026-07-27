@@ -6,27 +6,15 @@ import { UpdateBody } from "../Mutations/Update"
 
 
 /**
- * A component that displays medium-level content for an template entity.
+ * Formulář pro úpravu existujícího studenta.
  *
- * This component renders a label "TemplateMediumContent" followed by a serialized representation of the `template` object
- * and any additional child content. It is designed to handle and display information about an template entity object.
+ * Editovat jde jen to, co se v průběhu studia reálně mění — číslo semestru
+ * a studijní program. Zbytek (kdo student je, stav studia) se nastavuje jinde.
  *
- * @component
- * @param {Object} props - The properties for the TemplateMediumContent component.
- * @param {Object} props.template - The object representing the template entity.
- * @param {string|number} props.template.id - The unique identifier for the template entity.
- * @param {string} props.template.name - The name or label of the template entity.
- * @param {React.ReactNode} [props.children=null] - Additional content to render after the serialized `template` object.
- *
- * @returns {JSX.Element} A JSX element displaying the entity's details and optional content.
- *
- * @example
- * // Example usage:
- * const templateEntity = { id: 123, name: "Sample Entity" };
- * 
- * <TemplateMediumContent template={templateEntity}>
- *   <p>Additional information about the entity.</p>
- * </TemplateMediumContent>
+ * @param {object} item - upravovaný student
+ * @param {Function} onChange - volá se při každé změně pole
+ * @param {Function} onBlur - volá se při opuštění pole
+ * @returns {JSX.Element}
  */
 export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (e) => null, onConfirm = () => null, children }) => {
 
@@ -43,6 +31,11 @@ export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (
                 onChange={onChange}
                 onBlur={onBlur}
             />
+            {/*
+              EntityLookup napovídá programy podle názvu přes SearchAsyncAction.
+              Dřív se sem ručně opisovalo UUID programu, což bylo pro uživatele
+              prakticky nepoužitelné.
+            */}
             <EntityLookup
                 id="programId"
                 label="Program"
@@ -58,6 +51,15 @@ export const MediumEditableContent = ({ item, onChange = (e) => null, onBlur = (
     )
 }
 
+/**
+ * Formulář pro založení nového studenta.
+ *
+ * Na rozdíl od editace se tady vybírá i sám student — záznam ještě neexistuje,
+ * takže je potřeba říct, ke komu ho vytvořit.
+ *
+ * @param {object} item - rozpracovaný nový záznam
+ * @returns {JSX.Element}
+ */
 export const CreateContent = ({ item, onChange = (e) => null, onBlur = (e) => null, onConfirm = () => null, children }) => {
 
     return (

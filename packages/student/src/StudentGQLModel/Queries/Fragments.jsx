@@ -4,6 +4,15 @@ import { UserFragment } from "../../UserGQLModel/Queries/Fragments"
 import { StateFragment } from "../../StateGQLModel/Queries/Fragments"
 import { SubjectFragment } from "../../SubjectGQLModel/Queries/Fragments"
 
+/**
+ * Fragmenty pro StudentGQLModel ve třech úrovních podrobnosti.
+ * Používají se podle toho, kolik dat daná obrazovka opravdu potřebuje —
+ * není důvod tahat ze serveru všechna hodnocení, když vykreslujeme jen odkaz.
+ *
+ *   Link   → identifikace studenta + jeho program, uživatel a stav studia
+ *   Medium → Link + role přihlášeného uživatele (RBAC), podle nich se skrývají tlačítka
+ *   Large  → Medium + seznam hodnocení, používá ho detailní stránka studenta
+ */
 const LinkFragmentStr = `
 fragment Link on StudentGQLModel {
    __typename
@@ -47,10 +56,12 @@ fragment Medium on StudentGQLModel {
 }
 `
 
+// limit: 100 je pojistka — student za celé studium tolik hodnocení nenasbírá,
+// ale kdyby v datech byl nepořádek, dotaz nevrátí obrovskou odpověď.
 const LargeFragmentStr = `
 fragment Large on StudentGQLModel {
   ...Medium
-  
+
   evaluations(limit: 100){
     order
     points
@@ -119,6 +130,9 @@ fragment RBRoles on RBACObjectGQLModel {
   }
 }`
 
+// createQueryStrLazy poskládá závislé fragmenty až při prvním použití dotazu.
+// Kdyby se skládaly hned při importu, vznikly by cyklické importy mezi modely
+// (Student potřebuje Program, Program potřebuje Subject...).
 export const RoleFragment = createQueryStrLazy(`${RoleFragmentStr}`)
 export const RBACFragment = createQueryStrLazy(`${RBACFragmentStr}`)
 

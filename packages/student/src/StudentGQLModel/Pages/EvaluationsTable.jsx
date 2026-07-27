@@ -3,6 +3,11 @@ import { Accordion, Badge, Card, Row, Col, Table } from "react-bootstrap"
 
 /**
  * Vrátí název předmětu pro hodnocení podle ID předmětu v semestru
+ *
+ * Hodnocení samo o sobě název předmětu neobsahuje, nese jen subjectId.
+ * Název proto dohledáváme v seznamu předmětů programu, který přišel
+ * ze serveru stejným dotazem jako student.
+ *
  * @param {object} ev - hodnocení studenta
  * @param {object} item - student, program s predmety
  * @returns {string}
@@ -44,6 +49,8 @@ const gradeBadgeVariant = (ev) => {
  */
 const groupBySemester = (evaluations = []) => {
     const groups = evaluations.reduce((acc, ev) => {
+        // Pokud semestr nemá pořadí, použijeme aspoň jeho id — hodnocení se tak
+        // neztratí, jen skončí ve vlastní skupině místo aby zmizelo z přehledu.
         const semOrder = ev.semester?.order ?? ev.semester?.id ?? 0
         const key = String(semOrder)
         if (!acc[key]) acc[key] = { order: semOrder, values: [] }
@@ -56,6 +63,10 @@ const groupBySemester = (evaluations = []) => {
 
 /**
  * Vykreslí rozbalovací tabulku s předměty programu.
+ *
+ * Seznam je schovaný v Accordionu záměrně — u delších programů by jinak
+ * odsunul samotná hodnocení mimo obrazovku.
+ *
  * @param {Array<object>} subjects - seznam předmětů programu
  * @returns {JSX.Element|null} komponenta s rozbalovací tabulkou
  */
@@ -95,6 +106,11 @@ const ProgramSubjectsTable = ({ subjects = [] }) => {
 
 /**
  * Vykreslí přehled hodnocení studenta jako karty seskupené podle semestru.
+ *
+ * Místo jedné dlouhé tabulky dostane každý semestr vlastní kartu — student
+ * tak vidí studium po ročnících. Opakované pokusy zůstávají v tabulce vidět,
+ * nezobrazuje se jen poslední známka.
+ *
  * @param {Array<object>} evaluations - seznam hodnocení studenta
  * @param {object} item - student spolu s jeho programem
  * @returns {JSX.Element} komponenta s kartami semestrů

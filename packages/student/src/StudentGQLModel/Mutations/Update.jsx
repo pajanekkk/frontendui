@@ -8,9 +8,19 @@ import {
 import { MediumEditableContent, UpdateItemURI } from "../Components";
 import { UpdateAsyncAction } from "../Queries";
 
+/**
+ * Čtyři varianty téže operace — úpravy studenta. Liší se jen tím, jak ji
+ * uživatel spustí: odkazem, dialogem, tlačítkem nebo celou stránkou.
+ * Všechny sdílejí stejný formulář (MediumEditableContent), stejnou mutaci
+ * (UpdateAsyncAction) i stejná oprávnění.
+ */
+
 const DefaultContent = (props) => <MediumEditableContent {...props} />
 const mutationAsyncAction = UpdateAsyncAction
 
+// Kdo smí záznam měnit. mode "absolute" znamená, že se role posuzuje globálně
+// (jsi administrátor celého systému), ne vůči konkrétnímu záznamu.
+// Uživateli bez těchto rolí se tlačítka vůbec nevykreslí.
 const permissions = {
     oneOfRoles: ["superadmin", "administrátor"],
     mode: "absolute",
