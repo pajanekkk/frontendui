@@ -45,7 +45,7 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - npmjs upload v0.8.0
 
 ##### POZNATKY Z 2.PD:
-  * chyba při rychlé změně za sebou není zaviněna naší chybou, ale je to globální chyba
+  * chyba při rychlé změně za sebou není zaviněna naší chybou, ale je to globální chyba (OPRAVENO)
   * nutné rozšířit o další modely, jinak všechno v pořádku
 
 ### 1.6.2026
@@ -67,6 +67,13 @@ Toto repo se stará o zobrazení průběhu studia / zkoušek, známky, pokusy, p
 - přidání bodů (nutná úprava systemdata)
 - další linky
 - lehká úprava filtru
+
+### 26.7.2026
+- uložení dat při restartu stacku
+
+### 27.7.2026
+- dokumentace kódu
+- npmjs upload v1.0.0
 
 ## Jak spustit app?
 
